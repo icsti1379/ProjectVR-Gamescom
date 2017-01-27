@@ -8,7 +8,6 @@ public class TetroProperties : MonoBehaviour {
 
     public int iColumn;
     public int iWall;
-    public int iRow;
 
     public Vector3 vPositionCube;
     public Vector3 vPositionCube2;

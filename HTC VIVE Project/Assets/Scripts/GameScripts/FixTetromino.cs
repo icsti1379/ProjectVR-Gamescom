@@ -32,7 +32,6 @@ public class FixTetromino : MonoBehaviour {
             float fPoslil = SpawnTetromino.iMapScale / 2 - 0.5f;
             float fPosbig = SpawnTetromino.iMapScale / 2 + 0.5f;
             
-
             // Back
             if (tProperties.iWall == 1)
                 TetroPos = new Vector3(tProperties.iColumn - fPosbig, 0, fPoslil);
@@ -52,12 +51,9 @@ public class FixTetromino : MonoBehaviour {
             float yPos = transform.position.y - 0.5f;
             yPos = Mathf.Round(yPos);
 
-            tProperties.iRow = (int)yPos + 1;
             transform.position = new Vector3(TetroPos.x, yPos + 0.5f, TetroPos.z);
-            transform.rotation = new Quaternion();
-            transform.Rotate(tProperties.vRotation);
 
-            if (tProperties.iType == 3) // if the Tetromino is I type (=4 Quads in a Row) it needs to be rotated
+            if (tProperties.iType == 3) // if the Tetromino is type 3 (=4 Quads in a Row) it needs to be rotated
                 transform.Rotate(new Vector3(90, 0, 0));
 
             SplitTetrominos sSplit;

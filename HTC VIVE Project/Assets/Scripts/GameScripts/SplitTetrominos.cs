@@ -52,9 +52,7 @@ public class SplitTetrominos : MonoBehaviour {
         tCube.iCubeID = tTetro.iTetroID;
         tCube.iWall = tTetro.iWall;
 
-        float yPos = gCubeSpawned.transform.position.y + gEmptySpawned.transform.position.y - 0.5f;
-
-        tCube.iRow = (int)yPos + 1 + (int)gCubeSpawned.transform.position.y;
+        tCube.iRow = (int)Mathf.Round(Vector3.Distance(gCubeSpawned.transform.position, new Vector3(gCubeSpawned.transform.position.x, -0.5f, gCubeSpawned.transform.position.z)));
 
         Rigidbody rb;
         rb = gCubeSpawned.GetComponent<Rigidbody>();
