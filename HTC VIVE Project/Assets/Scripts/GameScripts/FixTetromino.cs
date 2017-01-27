@@ -5,19 +5,18 @@ public class FixTetromino : MonoBehaviour {
 
     Rigidbody rRbody;
     SpawnTetromino sTetromino;
-    public Vector3 vRotation;
+    TetroProperties tProperties;
+    bool bTetroSplitted;
 
-    public int iCubeID;
-    public string sType;
-    public float fHealth;
-    public int iColumn;
-    public int iWall;
-    public int iRow;
+    Vector3 vRotation;
 
     void Start () {
         rRbody = GetComponent<Rigidbody>();
+        tProperties = GetComponent<TetroProperties>();
+        bTetroSplitted = false;
     }
-	
+
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Tetromino") || collision.gameObject.CompareTag("Plane"))
@@ -32,91 +31,42 @@ public class FixTetromino : MonoBehaviour {
 
             float fPoslil = SpawnTetromino.iMapScale / 2 - 0.5f;
             float fPosbig = SpawnTetromino.iMapScale / 2 + 0.5f;
-
+            
 
             // Back
-            if (iWall == 1)
-            {
-                TetroPos = new Vector3(iColumn - fPosbig, 0, fPoslil);
-                vRotation = new Vector3();
-            }
+            if (tProperties.iWall == 1)
+                TetroPos = new Vector3(tProperties.iColumn - fPosbig, 0, fPoslil);
 
             // Front
-            else if (iWall == 3)
-            {
-                TetroPos = new Vector3(fPosbig - iColumn, 0, -fPoslil);
-                vRotation = new Vector3();
-            }
+            else if (tProperties.iWall == 3)
+                TetroPos = new Vector3(fPosbig - tProperties.iColumn, 0, -fPoslil);
 
             // Right
-            else if (iWall == 2)
-            {
-                TetroPos = new Vector3(fPoslil, 0, fPosbig - iColumn);
-                vRotation = new Vector3(0, 90, 0);
-            }
+            else if (tProperties.iWall == 2)
+                TetroPos = new Vector3(fPoslil, 0, fPosbig - tProperties.iColumn);
 
             // Left
-            else if (iWall == 4)
-            {
-                TetroPos = new Vector3(-fPoslil, 0, iColumn - fPosbig);
-                vRotation = new Vector3(0, -90, 0);
-            }
+            else if (tProperties.iWall == 4)
+                TetroPos = new Vector3(-fPoslil, 0, tProperties.iColumn - fPosbig);
 
             float yPos = transform.position.y - 0.5f;
             yPos = Mathf.Round(yPos);
 
-            iRow = (int)yPos + 1;
+            tProperties.iRow = (int)yPos + 1;
             transform.position = new Vector3(TetroPos.x, yPos + 0.5f, TetroPos.z);
             transform.rotation = new Quaternion();
-            transform.Rotate(vRotation);
+            transform.Rotate(tProperties.vRotation);
 
-            if (sType == "Tetro 3") // if the Tetromino is I type (=4 Quads in a Row) it needs to be rotated
+            if (tProperties.iType == 3) // if the Tetromino is I type (=4 Quads in a Row) it needs to be rotated
                 transform.Rotate(new Vector3(90, 0, 0));
-        }
-    }
 
+            SplitTetrominos sSplit;
+            sSplit = GetComponent<SplitTetrominos>();
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag("Border"))
-        {
-            if (iColumn <= 4)
+            if (!bTetroSplitted)
             {
-                iColumn++;
-
-                if (iWall == 1)
-                    transform.position += new Vector3(1, 0, 0);
-
-                else if (iWall == 3)
-                    transform.position -= new Vector3(1, 0, 0);
-
-                else if (iWall == 2)
-                    transform.position -= new Vector3(0, 0, 1);
-
-                else if (iWall == 4)
-                    transform.position += new Vector3(0, 0, 1);
-
-                Debug.Log(name + " moved from Column " + (iColumn - 1) + " to " + iColumn);
-            }
-
-
-            else
-            {
-                iColumn--;
-
-                if (iWall == 1)
-                    transform.position -= new Vector3(1, 0, 0);
-
-                else if (iWall == 3)
-                    transform.position += new Vector3(1, 0, 0);
-
-                else if (iWall == 2)
-                    transform.position += new Vector3(0, 0, 1);
-
-                else if (iWall == 4)
-                    transform.position -= new Vector3(0, 0, 1);
-
-                Debug.Log(name + " moved from Column " + (iColumn + 1) + " to " + iColumn);
+                sSplit.SplitTetromino();
+                bTetroSplitted = true;
             }
         }
     }

@@ -29,6 +29,9 @@ GameObject:
   - 65: {fileID: 65000010181182702}
   - 114: {fileID: 114000010349724820}
   - 114: {fileID: 114000012435596604}
+  - 114: {fileID: 114000011340360258}
+  - 114: {fileID: 114000012018287872}
+  - 114: {fileID: 114000012506759360}
   m_Layer: 0
   m_Name: Tetro 2
   m_TagString: Tetromino
@@ -179,13 +182,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 778d3f3034a29ea43969fad9b663d2db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vRotation: {x: 0, y: 0, z: 0}
-  iCubeID: 0
-  sType: 
-  fHealth: 0
+--- !u!114 &114000011340360258
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013703181176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e904e770a043d7b4fb8113786aae9cad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iTetroID: 0
+  iType: 0
   iColumn: 0
   iWall: 0
   iRow: 0
+  vPositionCube: {x: 0, y: 0, z: 0}
+  vPositionCube2: {x: 0, y: 0, z: 0}
+  vPositionCube3: {x: 0, y: 0, z: 0}
+  vPositionCube4: {x: 0, y: 0, z: 0}
+  vRotation: {x: 0, y: 0, z: 0}
+--- !u!114 &114000012018287872
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013703181176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a0b164b3a7eac9449481499876b99bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114000012435596604
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -197,3 +225,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f7b5eb601eda024b889e665e71991a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114000012506759360
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013703181176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad41ccd9d8051204784ef3248360d8ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gEmpty: {fileID: 1000012566251740, guid: 0aee0d57633f53440980c8ed1df5e29f, type: 2}
+  gCube: {fileID: 1000010380771592, guid: 1fe52ecd08bc8984ebb801654b2373ca, type: 2}

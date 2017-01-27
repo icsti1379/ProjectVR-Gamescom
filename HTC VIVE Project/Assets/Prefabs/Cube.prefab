@@ -23,7 +23,8 @@ GameObject:
   - 65: {fileID: 65000014132200644}
   - 23: {fileID: 23000012932555812}
   - 54: {fileID: 54000013214529036}
-  - 114: {fileID: 114000012723838464}
+  - 114: {fileID: 114000014078452026}
+  - 114: {fileID: 114000012228385400}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Tetromino
@@ -90,7 +91,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -107,7 +108,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.95, y: 1, z: 0.95}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114000012723838464
+--- !u!114 &114000012228385400
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -115,13 +116,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000010380771592}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 778d3f3034a29ea43969fad9b663d2db, type: 3}
+  m_Script: {fileID: 11500000, guid: c30a72f5a081b2140866578e99f08f0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vRotation: {x: 0, y: 0, z: 0}
   iCubeID: 0
-  sType: 
   fHealth: 0
   iColumn: 0
   iWall: 0
   iRow: 0
+--- !u!114 &114000014078452026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010380771592}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f7b5eb601eda024b889e665e71991a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

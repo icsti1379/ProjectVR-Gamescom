@@ -7,15 +7,18 @@ public class SpawnTetromino : MonoBehaviour
     /// Tetromino type to be instantiated
     /// </summary>
     GameObject gTetroType;
+    int iTetroType;
 
     /// <summary>
     /// Tetromino that is beeing instantiated
     /// </summary>
     GameObject gTetroSpawn;
 
-    FixTetromino fFixTetro;
+    TetroProperties fProperties;
 
     Vector3 vSpawnPosition;
+
+
     Vector3 vSpawnRotation;
 
     /// <summary>
@@ -56,12 +59,15 @@ public class SpawnTetromino : MonoBehaviour
     /// </summary>
     bool bFirstCube;
 
+    public static bool bTetroSplitted;
+
 
     void Start()
     {
         iTetroID = 0;
         bFirstCube = true;
         TetroFall.fSpeed = fFallingSpeed;
+        bTetroSplitted = false;
     }
 
     void Update()
@@ -72,10 +78,11 @@ public class SpawnTetromino : MonoBehaviour
             bFirstCube = false;
         }
 
-        Rigidbody rLastSpawned = gTetroSpawn.GetComponent<Rigidbody>();
-
-        if(rLastSpawned.isKinematic)    // Instantiates a new Tetromino if the one that was instantiated before is kinematic (=has touched the ground)
+        if (bTetroSplitted)    // Instantiates a new Tetromino if the one that was instantiated before has been splitted
+        {
             SpawnNewTetromino();
+            bTetroSplitted = false;
+        }
     }
 
     /// <summary>
@@ -86,23 +93,40 @@ public class SpawnTetromino : MonoBehaviour
         int iRandomTetro = Random.Range(1, 7);
 
         if (iRandomTetro == 1)
+        {
             gTetroType = gTetro1;
+            iTetroType = 1;
+        }
 
         if (iRandomTetro == 2)
+        {
             gTetroType = gTetro2;
+            iTetroType = 2;
+        }
 
         if (iRandomTetro == 3)
+        {
             gTetroType = gTetro3;
+            iTetroType = 3;
+        }
 
         if (iRandomTetro == 4)
+        {
             gTetroType = gTetro4;
+            iTetroType = 4;
+        }
 
         if (iRandomTetro == 5)
+        {
             gTetroType = gTetro5;
+            iTetroType = 5;
+        }
 
         if (iRandomTetro == 6)
+        {
             gTetroType = gTetro6;
-
+            iTetroType = 6;
+        }
 
         iRandomColumn = Random.Range(2, iMapScale - 1);
         iRandomWall = Random.Range(1, 5);
@@ -139,7 +163,7 @@ public class SpawnTetromino : MonoBehaviour
 
 
         gTetroSpawn = (GameObject)Instantiate(gTetroType, vSpawnPosition, new Quaternion());
-        fFixTetro = gTetroSpawn.GetComponent<FixTetromino>();
+        fProperties = gTetroSpawn.GetComponent<TetroProperties>();
 
         gTetroSpawn.transform.SetParent(transform);
         gTetroSpawn.transform.Rotate(vSpawnRotation);
@@ -150,9 +174,10 @@ public class SpawnTetromino : MonoBehaviour
         iTetroID++;
         gTetroSpawn.name = "Tetromino " + iTetroID;
 
-        fFixTetro.iCubeID = iTetroID;
-        fFixTetro.iColumn = iRandomColumn;
-        fFixTetro.iWall = iRandomWall;
-        fFixTetro.sType = gTetroType.name;
+        fProperties.iTetroID = iTetroID;
+        fProperties.iColumn = iRandomColumn;
+        fProperties.iWall = iRandomWall;
+        fProperties.iType = iTetroType;
+        fProperties.vRotation = vSpawnRotation;
     }
 }

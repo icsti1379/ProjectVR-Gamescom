@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44692558, g: 0.49678743, b: 0.57508624, a: 1}
+  m_IndirectSpecularColor: {r: 0.44692504, g: 0.4967869, b: 0.57508504, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -348,8 +348,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gBorderPrefab: {fileID: 1000012461867140, guid: 769d556e899b4a54fb1fc7a993907e79,
     type: 2}
-  iTetrisMapScale: 23
-  iTetroSpawnPosY: 33
+  iTetrisMapScale: 10
+  iTetroSpawnPosY: 30
 --- !u!1 &2095645865
 GameObject:
   m_ObjectHideFlags: 0

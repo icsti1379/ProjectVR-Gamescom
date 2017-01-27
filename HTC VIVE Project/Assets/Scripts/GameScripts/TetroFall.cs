@@ -10,6 +10,6 @@ public class TetroFall : MonoBehaviour {
     /// </summary>
     void Update ()
     {
-        transform.position -= new Vector3(0, fSpeed, 0) ;
+        transform.position -= new Vector3(0, 0.15f, 0) ;
     }
 }
