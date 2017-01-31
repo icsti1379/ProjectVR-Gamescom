@@ -83,7 +83,23 @@ public class SpawnTetromino : MonoBehaviour
             SpawnNewTetromino();
             bTetroSplitted = false;
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            fProperties = gTetroSpawn.GetComponent<TetroProperties>();
+            fProperties.iColumn--;
+            fProperties.UpdatePosition();
+            gTetroSpawn.GetComponent<CorrectTetromino>().CorrectTetro();
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            fProperties = gTetroSpawn.GetComponent<TetroProperties>();
+            fProperties.iColumn++;
+            fProperties.UpdatePosition();
+            gTetroSpawn.GetComponent<CorrectTetromino>().CorrectTetro();
+        }
     }
+
 
     /// <summary>
     /// Instantiates a new Tetromino in a random Wall and Column 
@@ -128,7 +144,7 @@ public class SpawnTetromino : MonoBehaviour
             iTetroType = 6;
         }
 
-        iRandomColumn = Random.Range(2, iMapScale - 1);
+        iRandomColumn = Random.Range(2, iMapScale);
         iRandomWall = Random.Range(1, 5);
 
         vSpawnPosition = new Vector3(0, iSpawnPosY, 0);
@@ -179,5 +195,7 @@ public class SpawnTetromino : MonoBehaviour
         fProperties.iWall = iRandomWall;
         fProperties.iType = iTetroType;
         fProperties.vRotation = vSpawnRotation;
+
+        gTetroSpawn.GetComponent<CorrectTetromino>().CorrectTetro();
     }
 }

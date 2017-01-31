@@ -65,10 +65,10 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: cd6bb076e1253e1488807fcd6adcdb30, type: 2}
-  - {fileID: 2100000, guid: cd6bb076e1253e1488807fcd6adcdb30, type: 2}
-  - {fileID: 2100000, guid: cd6bb076e1253e1488807fcd6adcdb30, type: 2}
-  - {fileID: 2100000, guid: cd6bb076e1253e1488807fcd6adcdb30, type: 2}
+  - {fileID: 2100000, guid: f6724340aac6ba9408794d0789b41020, type: 2}
+  - {fileID: 2100000, guid: f6724340aac6ba9408794d0789b41020, type: 2}
+  - {fileID: 2100000, guid: f6724340aac6ba9408794d0789b41020, type: 2}
+  - {fileID: 2100000, guid: f6724340aac6ba9408794d0789b41020, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -204,11 +204,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e904e770a043d7b4fb8113786aae9cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cColor: {r: 0, g: 0, b: 0, a: 0}
   iTetroID: 0
   iType: 0
   iColumn: 0
   iWall: 0
-  iRow: 0
   vPositionCube: {x: 0, y: 0, z: 0}
   vPositionCube2: {x: 0, y: 0, z: 0}
   vPositionCube3: {x: 0, y: 0, z: 0}

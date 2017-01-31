@@ -3,6 +3,7 @@ using System.Collections;
 
 public class TetroProperties : MonoBehaviour {
 
+    public Color cColor;
     public int iTetroID;
     public int iType;
 
@@ -52,6 +53,9 @@ public class TetroProperties : MonoBehaviour {
             transform.rotation = new Quaternion();
             transform.Rotate(new Vector3(0, -90, 0));
         }
+
+        if (iType == 3)
+            transform.Rotate(90, 0, 0);
     }
 
     /// <summary>
@@ -91,6 +95,35 @@ public class TetroProperties : MonoBehaviour {
 
         else if (iType == 6)
             AsignCubes(new Vector3(1, -1), new Vector3(1, -2), new Vector3(1, 0));
+    }
+
+    public void CalculateCubesZ()
+    {
+        vPositionCube = transform.position;
+
+        int i;
+        if (iWall == 4)
+            i = -1;
+        else
+            i = 1;
+
+        if (iType == 1)
+            AsignCubes(new Vector3(0, 1), new Vector3(0, 1, 1 * i), new Vector3(0, 2, 1 * i));
+
+        else if (iType == 2)
+            AsignCubes(new Vector3(0, -1, 1 * i), new Vector3(0, -1), new Vector3(0, -2, 1 * i));
+
+        else if (iType == 3)
+            AsignCubes(new Vector3(0, 1), new Vector3(0, 2), new Vector3(0, 3));
+
+        else if (iType == 4)
+            AsignCubes(new Vector3(0, 0, 1 * i), new Vector3(0, 0, 2 * i), new Vector3(0, 1, 1 * i));
+
+        else if (iType == 5)
+            AsignCubes(new Vector3(0, -1), new Vector3(0, -2), new Vector3(0, -2, 1 * i));
+
+        else if (iType == 6)
+            AsignCubes(new Vector3(0, -1, -1 * i), new Vector3(0, -2, -1 * i), new Vector3(0, 0, -1 * i));
     }
 
     /// <summary>

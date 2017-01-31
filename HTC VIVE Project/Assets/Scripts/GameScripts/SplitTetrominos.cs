@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SplitTetrominos : MonoBehaviour {
     [SerializeField]
@@ -20,18 +21,15 @@ public class SplitTetrominos : MonoBehaviour {
         gEmptySpawned = (GameObject)Instantiate(gEmpty, transform.position, new Quaternion(), transform.parent);
         gEmptySpawned.name = name;
 
-        tProperties.CalculateCubes();
+        if (tProperties.iWall == 1 || tProperties.iWall == 3)
+            tProperties.CalculateCubes();
+        else
+            tProperties.CalculateCubesZ();
 
         SpawnCube(tProperties.vPositionCube, 1);
         SpawnCube(tProperties.vPositionCube2, 2);
         SpawnCube(tProperties.vPositionCube3, 3);
         SpawnCube(tProperties.vPositionCube4, 4);
-
-        if (tProperties.iWall == 2)
-            gEmptySpawned.transform.Rotate(new Vector3(0, 90));
-
-        else if (tProperties.iWall == 4)
-            gEmptySpawned.transform.Rotate(new Vector3(0, -90));
 
         Destroy(gameObject);
         SpawnTetromino.bTetroSplitted = true;
@@ -51,11 +49,18 @@ public class SplitTetrominos : MonoBehaviour {
 
         tCube.iCubeID = tTetro.iTetroID;
         tCube.iWall = tTetro.iWall;
+        tCube.LocalPosition = vPosition;
+
+        tCube.iTetroType = gameObject.GetComponent<TetroProperties>().iType;
 
         tCube.iRow = (int)Mathf.Round(Vector3.Distance(gCubeSpawned.transform.position, new Vector3(gCubeSpawned.transform.position.x, -0.5f, gCubeSpawned.transform.position.z)));
 
         Rigidbody rb;
         rb = gCubeSpawned.GetComponent<Rigidbody>();
         rb.isKinematic = true;
+
+
+        TetroDismount.lListOfWall(tCube.iWall)[tCube.iRow - 1].Add(gCubeSpawned);
+        TetroDismount.CheckComplete(tCube.iRow, tCube.iWall);
     }
 }
