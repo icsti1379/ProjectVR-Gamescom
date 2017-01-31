@@ -83,21 +83,6 @@ public class SpawnTetromino : MonoBehaviour
             SpawnNewTetromino();
             bTetroSplitted = false;
         }
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            fProperties = gTetroSpawn.GetComponent<TetroProperties>();
-            fProperties.iColumn--;
-            fProperties.UpdatePosition();
-            gTetroSpawn.GetComponent<CorrectTetromino>().CorrectTetro();
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            fProperties = gTetroSpawn.GetComponent<TetroProperties>();
-            fProperties.iColumn++;
-            fProperties.UpdatePosition();
-            gTetroSpawn.GetComponent<CorrectTetromino>().CorrectTetro();
-        }
     }
 
 

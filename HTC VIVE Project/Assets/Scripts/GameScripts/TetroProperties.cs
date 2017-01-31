@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class TetroProperties : MonoBehaviour {
 
@@ -56,6 +57,11 @@ public class TetroProperties : MonoBehaviour {
 
         if (iType == 3)
             transform.Rotate(90, 0, 0);
+    }
+
+    internal void RotateTetro()
+    {
+        throw new NotImplementedException();
     }
 
     /// <summary>
