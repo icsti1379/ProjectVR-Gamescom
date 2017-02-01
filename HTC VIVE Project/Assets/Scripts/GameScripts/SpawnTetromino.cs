@@ -28,7 +28,7 @@ public class SpawnTetromino : MonoBehaviour
     public static int iMapScale;
 
     [SerializeField]
-    [Range(0.05f, 0.3f)]
+    [Range(0.01f, 0.3f)]
     float fFallingSpeed;
 
     int iTetroID;
@@ -83,6 +83,45 @@ public class SpawnTetromino : MonoBehaviour
             SpawnNewTetromino();
             bTetroSplitted = false;
         }
+
+        // Move tetromino one column to the left
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            fProperties = gTetroSpawn.GetComponent<TetroProperties>();
+            fProperties.iColumn--;
+            fProperties.UpdatePosition();
+            gTetroSpawn.GetComponent<CorrectTetromino>().CorrectTetro();
+        }
+
+        // Move tetromino one column to the right
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            fProperties = gTetroSpawn.GetComponent<TetroProperties>();
+            fProperties.iColumn++;
+            fProperties.UpdatePosition();
+            gTetroSpawn.GetComponent<CorrectTetromino>().CorrectTetro();
+        }
+
+        //TODO: Check if tetromino rotates 90 degrees
+        //TODO: Bug: If rotating tetromino sometime no new one is spawning!!!
+        //if (Input.GetKeyDown(KeyCode.UpArrow))
+        //{
+        //    fProperties = gTetroSpawn.GetComponent<TetroProperties>();
+            
+        //    fProperties.RotateTetro(+90);
+        //    gTetroSpawn.GetComponent<CorrectTetromino>().CorrectTetro();
+        //}
+
+        //TODO: Need falling speed variable!!! Maybe with TetroFall ???
+        // Speed down tetromino
+        //if (Input.GetKey(KeyCode.DownArrow))
+        //{
+        //    fFallingSpeed = 10;
+        //}
+        //else
+        //{
+        //    fFallingSpeed = 0.05f;
+        //}
     }
 
 
