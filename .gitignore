@@ -1,6 +1,7 @@
 # ====== #
 # Unity  #
 # ====== #
+
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -57,3 +58,13 @@ sysinfo.txt
 ehthumbs.db
 [Tt]humbs.db
 [Dd]esktop.ini
+
+*.bakert
+HTC VIVE Project/Temp/Unity*
+HTC VIVE Project/Temp/UnityLockfile
+HTC VIVE Project/Temp/UnityTempFile-8f96b4f1f363218459107567bc6b173f
+HTC VIVE Project/Temp/UnityTempFile-9d68fa1452c8c0b46a052b19c8b65570
+HTC VIVE Project/Temp/UnityTempFile-1a136d361cda1314db520c9256f9bcd0
+HTC VIVE Project/Temp/UnityTempFile-27f2eb0f7327e8845a9f423ae8a8c621
+HTC VIVE Project/Temp/UnityTempFile-e2411acdafd125f429eefc9eb1e2eda4
+*.backup

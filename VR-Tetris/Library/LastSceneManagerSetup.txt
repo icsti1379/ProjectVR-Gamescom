@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/Plugins/SteamVR/Scenes/example.unity
-  isLoaded: 1
-  isActive: 1

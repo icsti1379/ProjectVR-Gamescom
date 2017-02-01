@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44692558, g: 0.49678743, b: 0.57508624, a: 1}
+  m_IndirectSpecularColor: {r: 0.44692504, g: 0.4967869, b: 0.57508504, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -102,6 +102,7 @@ GameObject:
   - 92: {fileID: 590129135}
   - 124: {fileID: 590129134}
   - 81: {fileID: 590129133}
+  - 114: {fileID: 590129138}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -170,13 +171,25 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 590129132}
-  m_LocalRotation: {x: 0.30654773, y: -0, z: -0, w: 0.9518553}
-  m_LocalPosition: {x: 0, y: 9.28, z: -9.89}
+  m_LocalRotation: {x: 0.008726558, y: 0, z: 0, w: 0.999962}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 35.695004, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 1, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &590129138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 590129132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c131388ad18c96e4d84449c408bdedf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnSpeed: 15
 --- !u!1 &882213606
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,7 +222,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2cb9e9bae93960b4da7f34c3801788d6, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -282,6 +295,7 @@ GameObject:
   - 4: {fileID: 1279626016}
   - 114: {fileID: 1279626017}
   - 114: {fileID: 1279626015}
+  - 114: {fileID: 1279626018}
   m_Layer: 0
   m_Name: Tetromino Spawner
   m_TagString: Cube
@@ -300,7 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460510f6197ccfa40bcc0e4cf2b1f6d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fFallingSpeed: 0.159
+  fFallingSpeed: 0.05
   iRandomColumn: 0
   iRandomWall: 0
   gTetro1: {fileID: 1000010024661800, guid: 0d81a5be035ee584793712009b4eaccb, type: 2}
@@ -335,8 +349,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gBorderPrefab: {fileID: 1000012461867140, guid: 769d556e899b4a54fb1fc7a993907e79,
     type: 2}
-  iTetrisMapScale: 23
-  iTetroSpawnPosY: 33
+  iTetrisMapScale: 15
+  iTetroSpawnPosY: 31
+--- !u!114 &1279626018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1279626014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb14e42b0cb50b47892ef489d4063ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2095645865
 GameObject:
   m_ObjectHideFlags: 0
