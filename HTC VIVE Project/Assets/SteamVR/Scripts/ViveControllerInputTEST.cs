@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ViveControllerInputTest : MonoBehaviour
+public class ViveControllerInputTEST : MonoBehaviour
 {
     // Reference to comntroller as object being tracked
     private SteamVR_TrackedObject trackedObj;
