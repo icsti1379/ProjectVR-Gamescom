@@ -23,14 +23,11 @@ GameObject:
   - 23: {fileID: 23000012336423680}
   - 95: {fileID: 95000013829389116}
   - 54: {fileID: 54000012601518422}
-  - 65: {fileID: 65000013767399942}
-  - 65: {fileID: 65000014134494444}
   - 65: {fileID: 65000012320582924}
   - 65: {fileID: 65000013538702362}
   - 114: {fileID: 114000012934267972}
   - 114: {fileID: 114000014198852918}
   - 114: {fileID: 114000013004375898}
-  - 114: {fileID: 114000010439086312}
   - 114: {fileID: 114000013191823956}
   m_Layer: 0
   m_Name: Tetro 4
@@ -116,33 +113,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.9, z: 1.9}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65000013538702362
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013622957380}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.9, z: 1.9}
-  m_Center: {x: -4, y: 0, z: 0}
---- !u!65 &65000013767399942
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013622957380}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.9, z: 1.9}
+  m_Size: {x: 5.9, y: 1.9, z: 1.9}
   m_Center: {x: -2, y: 0, z: 0}
---- !u!65 &65000014134494444
+--- !u!65 &65000013538702362
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -171,17 +144,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114000010439086312
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013622957380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a0b164b3a7eac9449481499876b99bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114000012934267972
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -204,6 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e904e770a043d7b4fb8113786aae9cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gPMoving: {fileID: 0}
+  gPFalling: {fileID: 0}
   cColor: {r: 0, g: 0, b: 0, a: 0}
   iTetroID: 0
   iType: 0
@@ -213,6 +177,14 @@ MonoBehaviour:
   vPositionCube2: {x: 0, y: 0, z: 0}
   vPositionCube3: {x: 0, y: 0, z: 0}
   vPositionCube4: {x: 0, y: 0, z: 0}
+  iRow1: 0
+  iRow2: 0
+  iRow3: 0
+  iRow4: 0
+  iColumn1: 0
+  iColumn2: 0
+  iColumn3: 0
+  iColumn4: 0
   vRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &114000013191823956
 MonoBehaviour:

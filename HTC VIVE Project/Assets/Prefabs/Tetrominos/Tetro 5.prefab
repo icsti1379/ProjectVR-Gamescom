@@ -24,13 +24,10 @@ GameObject:
   - 95: {fileID: 95000013152930214}
   - 54: {fileID: 54000013711121720}
   - 65: {fileID: 65000011981384682}
-  - 65: {fileID: 65000010157874514}
-  - 65: {fileID: 65000010172871510}
   - 65: {fileID: 65000012373950094}
   - 114: {fileID: 114000012696076446}
   - 114: {fileID: 114000012184399308}
   - 114: {fileID: 114000011084500302}
-  - 114: {fileID: 114000010022762084}
   - 114: {fileID: 114000012723881346}
   m_Layer: 0
   m_Name: Tetro 5
@@ -106,30 +103,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65000010157874514
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010837310182}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.9, z: 1.9}
-  m_Center: {x: 0, y: -2, z: 0}
---- !u!65 &65000010172871510
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010837310182}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.9, z: 1.9}
-  m_Center: {x: 0, y: -4, z: 0}
 --- !u!65 &65000011981384682
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -152,8 +125,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.9, z: 1.9}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.9, y: 5.9, z: 1.9}
+  m_Center: {x: 0, y: -2, z: 0}
 --- !u!95 &95000013152930214
 Animator:
   serializedVersion: 3
@@ -171,17 +144,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114000010022762084
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010837310182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a0b164b3a7eac9449481499876b99bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114000011084500302
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -193,6 +155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e904e770a043d7b4fb8113786aae9cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gPMoving: {fileID: 0}
+  gPFalling: {fileID: 0}
   cColor: {r: 0, g: 0, b: 0, a: 0}
   iTetroID: 0
   iType: 0
@@ -202,6 +166,14 @@ MonoBehaviour:
   vPositionCube2: {x: 0, y: 0, z: 0}
   vPositionCube3: {x: 0, y: 0, z: 0}
   vPositionCube4: {x: 0, y: 0, z: 0}
+  iRow1: 0
+  iRow2: 0
+  iRow3: 0
+  iRow4: 0
+  iColumn1: 0
+  iColumn2: 0
+  iColumn3: 0
+  iColumn4: 0
   vRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &114000012184399308
 MonoBehaviour:
