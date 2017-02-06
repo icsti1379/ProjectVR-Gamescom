@@ -3,6 +3,8 @@ using System.Collections;
 
 public class TetroFall : MonoBehaviour {
 
+
+    //NOTE: ?? Where is this been used? Needed for speed down tetromino!
     public static float fSpeed;
 
     /// <summary>

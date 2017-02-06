@@ -59,10 +59,6 @@ public class TetroProperties : MonoBehaviour {
             transform.Rotate(90, 0, 0);
     }
 
-    internal void RotateTetro()
-    {
-        throw new NotImplementedException();
-    }
 
     /// <summary>
     /// Rotates the Tetromino by a certain Angle
@@ -76,7 +72,7 @@ public class TetroProperties : MonoBehaviour {
 
         vRotation = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
     }
-
+    
     /// <summary>
     /// Calculates the position of each Cube
     /// </summary>

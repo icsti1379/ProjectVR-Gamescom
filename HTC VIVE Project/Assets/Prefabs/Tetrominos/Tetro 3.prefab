@@ -23,14 +23,10 @@ GameObject:
   - 23: {fileID: 23000010254685498}
   - 95: {fileID: 95000014096790104}
   - 54: {fileID: 54000011644265630}
-  - 65: {fileID: 65000013103811582}
-  - 65: {fileID: 65000011677136982}
   - 65: {fileID: 65000011183701824}
-  - 65: {fileID: 65000010240233236}
   - 114: {fileID: 114000013691010908}
   - 114: {fileID: 114000014257182620}
   - 114: {fileID: 114000011480525670}
-  - 114: {fileID: 114000011144560496}
   - 114: {fileID: 114000011375656332}
   m_Layer: 0
   m_Name: Tetro 3
@@ -106,18 +102,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65000010240233236
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010811236898}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.9, z: 1.9}
-  m_Center: {x: 0, y: 0, z: -6}
 --- !u!65 &65000011183701824
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -128,32 +112,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.9, z: 1.9}
-  m_Center: {x: 0, y: 0, z: -4}
---- !u!65 &65000011677136982
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010811236898}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.9, z: 1.9}
-  m_Center: {x: 0, y: 0, z: -2}
---- !u!65 &65000013103811582
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010811236898}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.9, z: 1.9}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.9, y: 1.9, z: 7.9}
+  m_Center: {x: 0, y: 0, z: -3}
 --- !u!95 &95000014096790104
 Animator:
   serializedVersion: 3
@@ -171,17 +131,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114000011144560496
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010811236898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a0b164b3a7eac9449481499876b99bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114000011375656332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -206,6 +155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e904e770a043d7b4fb8113786aae9cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gPMoving: {fileID: 0}
+  gPFalling: {fileID: 0}
   cColor: {r: 0, g: 0, b: 0, a: 0}
   iTetroID: 0
   iType: 0
@@ -215,6 +166,14 @@ MonoBehaviour:
   vPositionCube2: {x: 0, y: 0, z: 0}
   vPositionCube3: {x: 0, y: 0, z: 0}
   vPositionCube4: {x: 0, y: 0, z: 0}
+  iRow1: 0
+  iRow2: 0
+  iRow3: 0
+  iRow4: 0
+  iColumn1: 0
+  iColumn2: 0
+  iColumn3: 0
+  iColumn4: 0
   vRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &114000013691010908
 MonoBehaviour:

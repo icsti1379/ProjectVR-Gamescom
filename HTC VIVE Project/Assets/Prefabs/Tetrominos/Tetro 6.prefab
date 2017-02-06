@@ -23,14 +23,11 @@ GameObject:
   - 23: {fileID: 23000012153212152}
   - 95: {fileID: 95000013523637168}
   - 54: {fileID: 54000011881563938}
-  - 65: {fileID: 65000011871223982}
-  - 65: {fileID: 65000011633458120}
   - 65: {fileID: 65000010287190896}
   - 65: {fileID: 65000013589518504}
   - 114: {fileID: 114000011962373108}
   - 114: {fileID: 114000010578644932}
   - 114: {fileID: 114000012642180606}
-  - 114: {fileID: 114000013068196974}
   - 114: {fileID: 114000012774434064}
   m_Layer: 0
   m_Name: Tetro 6
@@ -117,31 +114,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.9, y: 1.9, z: 1.9}
-  m_Center: {x: 2, y: 0, z: 0}
---- !u!65 &65000011633458120
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010189583940}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.9, z: 1.9}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65000011871223982
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010189583940}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.9, z: 1.9}
-  m_Center: {x: 2, y: -2, z: 0}
 --- !u!65 &65000013589518504
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -152,8 +125,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.9, z: 1.9}
-  m_Center: {x: 2, y: -4, z: 0}
+  m_Size: {x: 1.9, y: 5.9, z: 1.9}
+  m_Center: {x: 2, y: -2, z: 0}
 --- !u!95 &95000013523637168
 Animator:
   serializedVersion: 3
@@ -204,6 +177,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e904e770a043d7b4fb8113786aae9cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gPMoving: {fileID: 0}
+  gPFalling: {fileID: 0}
   cColor: {r: 0, g: 0, b: 0, a: 0}
   iTetroID: 0
   iType: 0
@@ -213,6 +188,14 @@ MonoBehaviour:
   vPositionCube2: {x: 0, y: 0, z: 0}
   vPositionCube3: {x: 0, y: 0, z: 0}
   vPositionCube4: {x: 0, y: 0, z: 0}
+  iRow1: 0
+  iRow2: 0
+  iRow3: 0
+  iRow4: 0
+  iColumn1: 0
+  iColumn2: 0
+  iColumn3: 0
+  iColumn4: 0
   vRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &114000012774434064
 MonoBehaviour:
@@ -227,14 +210,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gEmpty: {fileID: 1000012566251740, guid: 0aee0d57633f53440980c8ed1df5e29f, type: 2}
   gCube: {fileID: 1000010380771592, guid: 1fe52ecd08bc8984ebb801654b2373ca, type: 2}
---- !u!114 &114000013068196974
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010189583940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a0b164b3a7eac9449481499876b99bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
