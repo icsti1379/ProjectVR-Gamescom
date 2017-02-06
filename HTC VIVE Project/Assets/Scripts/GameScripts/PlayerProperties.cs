@@ -11,7 +11,9 @@ public class PlayerProperties : MonoBehaviour
 
     private int Level;
     private int playingTime;
-    private int playerScore;
+    private static int playerScore;
+    private int playerTotalScore;
+    private int playerHighscore;
 
     #endregion
 
@@ -24,11 +26,24 @@ public class PlayerProperties : MonoBehaviour
         set { playerName = value; }
     }
 
-    public int PlayerScore { get; set; }
+    public int PlayerScore
+    {
+        get { return playerScore; }
+        set { playerScore = value; }
+    }
 
-    public int PlayingTime { get; set; }
+    public int PlayingTime
+    {
+        get { return playingTime; }
+        set { playingTime = value; }
+    }
        
     #endregion
+
+    void AddScore(playerName playerTotalScore)
+    {
+        PlayerPrefs
+    }
 
     void Start ()
     {
