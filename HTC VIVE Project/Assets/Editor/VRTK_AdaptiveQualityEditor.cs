@@ -1,5 +1,5 @@
 #if (UNITY_5_4_OR_NEWER)
-namespace VRTK
+namespace VR
 {
     using System;
     using System.Globalization;

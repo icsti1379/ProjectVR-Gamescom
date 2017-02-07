@@ -1,4 +1,4 @@
-﻿namespace VRTK
+﻿namespace VR
 {
     using UnityEngine;
     using UnityEditor;

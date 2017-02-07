@@ -1,5 +1,5 @@
 ﻿// Frames Per Second Canvas|Prefabs|0010
-namespace VRTK
+namespace VR
 {
     using UnityEngine;
     using UnityEngine.UI;

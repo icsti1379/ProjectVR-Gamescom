@@ -1,9 +1,9 @@
-﻿namespace VRTK
+﻿namespace VR
 {
     using UnityEngine;
     using UnityEditor;
-    using VRTK.GrabAttachMechanics;
-    using VRTK.SecondaryControllerGrabActions;
+    using VR.GrabAttachMechanics;
+    using VR.SecondaryControllerGrabActions;
 
     public class VRTK_ObjectSetup : EditorWindow
     {

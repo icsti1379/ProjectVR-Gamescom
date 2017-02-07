@@ -1,9 +1,9 @@
-﻿namespace VRTK
+﻿namespace VR
 {
     using UnityEngine;
     using UnityEditor;
 
-    [CustomEditor(typeof(VRTK_PolicyList))]
+    [CustomEditor(typeof(VR_PolicyList))]
     public class VRTK_PolicyListEditor : Editor
     {
         SerializedProperty staticFlagMask;
@@ -20,7 +20,7 @@
             serializedObject.Update();
 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("operation"));
-            staticFlagMask.intValue = (int)((VRTK_PolicyList.CheckTypes)EditorGUILayout.EnumMaskField("Check Types", (VRTK_PolicyList.CheckTypes)staticFlagMask.intValue));
+            staticFlagMask.intValue = (int)((VR_PolicyList.CheckTypes)EditorGUILayout.EnumMaskField("Check Types", (VR_PolicyList.CheckTypes)staticFlagMask.intValue));
             ArrayGUI(identifiers);
 
             serializedObject.ApplyModifiedProperties();
