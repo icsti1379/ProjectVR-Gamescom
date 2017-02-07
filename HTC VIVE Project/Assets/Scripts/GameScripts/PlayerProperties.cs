@@ -37,13 +37,8 @@ public class PlayerProperties : MonoBehaviour
         get { return playingTime; }
         set { playingTime = value; }
     }
-       
-    #endregion
 
-    void AddScore(playerName playerTotalScore)
-    {
-        PlayerPrefs
-    }
+    #endregion
 
     void Start ()
     {
