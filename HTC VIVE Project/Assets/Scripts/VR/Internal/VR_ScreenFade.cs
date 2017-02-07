@@ -4,12 +4,12 @@ using System.Collections;
 
 using UnityEngine;
 
-
-/// <summary>
-/// Make use of screen fade for loading scenes and so on...
-/// </summary>
 namespace VR
 {
+    /// <summary>
+    /// Make use of screen fade for loading scenes and so on...
+    /// </summary>
+
     public class VR_ScreenFade : MonoBehaviour
     {
         public static VR_ScreenFade instance;

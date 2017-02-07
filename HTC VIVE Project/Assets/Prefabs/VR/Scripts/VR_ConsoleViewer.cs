@@ -1,19 +1,19 @@
-﻿// Console Viewer Canvas|Prefabs|0060
+﻿using UnityEngine;
+using UnityEngine.UI;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Linq;
+
+// Console Viewer Canvas|Prefabs|0060
 namespace VR
 {
-    using UnityEngine;
-    using UnityEngine.UI;
-    using System.Collections.Generic;
-    using System.Text.RegularExpressions;
-    using System.Linq;
-
     /// <summary>
     /// This canvas adds the unity console log to a world game object. To use the prefab, it simply needs to be placed into the scene and it will be visible in world space. It's also possible to child it to other objects such as the controller so it can track where the user is.
     /// </summary>
     /// <remarks>
     /// It's also recommended to use the Simple Pointer and UI Pointer on a controller to interact with the Console Viewer Canvas as it has a scrollable text area, a button to clear the log and a checkbox to toggle whether the log messages are collapsed.
     /// </remarks>
-    public class VRTK_ConsoleViewer : MonoBehaviour
+    public class VR_ConsoleViewer : MonoBehaviour
     {
         [Tooltip("The size of the font the log text is displayed in.")]
         public int fontSize = 14;

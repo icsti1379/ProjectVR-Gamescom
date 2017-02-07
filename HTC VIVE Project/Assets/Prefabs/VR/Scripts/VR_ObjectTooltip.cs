@@ -1,9 +1,9 @@
-﻿// Object Tooltip|Prefabs|0020
+﻿using UnityEngine;
+using UnityEngine.UI;
+
+// Object Tooltip|Prefabs|0020
 namespace VR
 {
-    using UnityEngine;
-    using UnityEngine.UI;
-
     /// <summary>
     /// This adds a UI element into the World Space that can be used to provide additional information about an object by providing a piece of text with a line drawn to a destination point.
     /// </summary>
