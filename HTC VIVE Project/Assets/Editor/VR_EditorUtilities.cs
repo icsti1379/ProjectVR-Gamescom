@@ -1,10 +1,10 @@
-﻿namespace VR
-{
-    using UnityEngine;
-    using UnityEditor;
-    using System;
+﻿using UnityEngine;
+using UnityEditor;
+using System;
 
-    public class VRTK_EditorUtilities : MonoBehaviour
+namespace VR
+{
+    public class VR_EditorUtilities : MonoBehaviour
     {
         public static GUIContent BuildGUIContent<T>(string fieldName, string displayOverride = null)
         {
