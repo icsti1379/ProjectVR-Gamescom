@@ -9,6 +9,8 @@ TagManager:
   - Border
   - Cube
   - Placeholder
+  - Bullet
+  - BorderPlacement
   layers:
   - Default
   - TransparentFX
