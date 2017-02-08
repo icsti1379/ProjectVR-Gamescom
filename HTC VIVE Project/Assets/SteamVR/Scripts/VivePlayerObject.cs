@@ -1,8 +1,5 @@
-﻿//NOTE: Usefull!!!
-
-using System;
+﻿using System;
 using System.Collections;
-
 using UnityEngine;
 
 namespace VR
@@ -11,7 +8,7 @@ namespace VR
     /// Provide a way of tagging game objects as player specific objects to allow other scripts 
     /// to identify these specific objects without needing to use tags or without needing to append the name of the game object.
     /// </summary>
-    public class VR_PlayerObject : MonoBehaviour
+    public class VivePlayerObject : MonoBehaviour
     {
         public enum ObjectTypes
         {
@@ -32,9 +29,9 @@ namespace VR
         /// <param name="objType">The type of player object that is to be assigned.</param>
         public static void SetPlayerObject(GameObject obj, ObjectTypes objType)
         {
-            if (!obj.GetComponent<VR_PlayerObject>())
+            if (!obj.GetComponent<VivePlayerObject>())
             {
-                var playerObject = obj.AddComponent<VR_PlayerObject>();
+                var playerObject = obj.AddComponent<VivePlayerObject>();
                 playerObject.objectType = objType;
             }
         }
@@ -47,7 +44,7 @@ namespace VR
         /// <returns>Returns true if the object is a player object with the optional given type.</returns>
         public static bool IsPlayerObject(GameObject obj, ObjectTypes ofType = ObjectTypes.Null)
         {
-            foreach (var playerObject in obj.GetComponentsInParent<VR_PlayerObject>(true))
+            foreach (var playerObject in obj.GetComponentsInParent<VivePlayerObject>(true))
             {
                 if (ofType == ObjectTypes.Null || ofType == playerObject.objectType)
                 {
