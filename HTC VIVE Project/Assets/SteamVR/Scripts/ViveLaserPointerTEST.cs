@@ -3,6 +3,12 @@ using System.Collections;
 
 public class ViveLaserPointerTEST : MonoBehaviour
 {
+    // Transform of [CameraRig]
+    public Transform cameraRigTransform;
+    
+    // Trasform Camera(head)
+    public Transform headTransform;
+
     private SteamVR_TrackedObject trackedObj;
 
     private SteamVR_Controller.Device Controller
