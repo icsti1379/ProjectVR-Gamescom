@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Linq;
 
-// Console Viewer Canvas|Prefabs|0060
 namespace VR
 {
     /// <summary>

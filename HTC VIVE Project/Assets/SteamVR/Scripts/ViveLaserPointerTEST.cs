@@ -13,7 +13,7 @@ public class ViveLaserPointerTEST : MonoBehaviour
 
     private SteamVR_Controller.Device Controller
     {
-        get { return SteamVR_Controller.Input((int)trackedObj.index); }
+        get { return trackedObj != null ? SteamVR_Controller.Input((int)trackedObj.index) : null; }
     }
 
     void Awake()
@@ -55,7 +55,7 @@ public class ViveLaserPointerTEST : MonoBehaviour
 	void Update ()
     {
         // If pressed "shoot" a ray, if it hits something store the point where it hit and show the laser
-        if (Controller.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
+        if (Controller != null && Controller.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
         {
             RaycastHit hit;
 

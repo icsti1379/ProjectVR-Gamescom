@@ -15,7 +15,7 @@ public class ViveControllerGrabObjectTEST : MonoBehaviour
     // Device property to easy access the controller. Uses tracked object's index to return controllers's input.
     private SteamVR_Controller.Device Controller
     {
-        get { return SteamVR_Controller.Input((int) trackedObj.index); }
+        get { return trackedObj ? SteamVR_Controller.Input((int)trackedObj.index) : null; }
     }
 
     void Awake()
@@ -99,7 +99,7 @@ public class ViveControllerGrabObjectTEST : MonoBehaviour
             // Remove connection to the object held by the joint and destroy it.
             GetComponent<FixedJoint>().connectedBody = null;
             Destroy(GetComponent<FixedJoint>());
-            
+
             // Add the speed and rotation of the controller when the player releases the object.
             objectInHand.GetComponent<Rigidbody>().velocity = Controller.velocity;
             objectInHand.GetComponent<Rigidbody>().angularVelocity = Controller.angularVelocity;
@@ -111,8 +111,11 @@ public class ViveControllerGrabObjectTEST : MonoBehaviour
 
     #endregion
 
-    void Update ()
+    void Update()
     {
+        if(Controller == null)
+            return;
+
         // Grab potential target when player sqeezes the trigger.
         if (Controller.GetHairTriggerDown())
         {
@@ -130,5 +133,5 @@ public class ViveControllerGrabObjectTEST : MonoBehaviour
                 ReleaseObject();
             }
         }
-	}
+    }
 }

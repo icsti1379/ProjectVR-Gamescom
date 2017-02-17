@@ -1,7 +1,5 @@
-﻿//NOTE: Usefull!!!!
-using System;
+﻿using System;
 using System.Collections;
-
 using UnityEngine;
 
 namespace VR

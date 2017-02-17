@@ -9,17 +9,20 @@ public class ViveControllerInputTEST : MonoBehaviour
     // Device property to easy access the controller. Uses tracked object's index to return controllers's input.
     private SteamVR_Controller.Device Controller
     {
-        get { return SteamVR_Controller.Input((int) trackedObj.index); }
+        get { return trackedObj != null ? SteamVR_Controller.Input((int)trackedObj.index) : null; }
     }
 
     void Awake()
     {
         trackedObj = GetComponent<SteamVR_TrackedObject>();
     }
-    
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
+        if (Controller == null)
+            return;
+
         // Get the position of the finger when it's on the touchpad and write it to the Console.
         if (Controller.GetAxis() != Vector2.zero)
         {
