@@ -8,7 +8,7 @@ public class CubeProperties : MonoBehaviour {
 
     public int iCubeID;
 
-    public float fHealth = 1;
+    public float fHealth;
 
     public int iColumn;
     public int iWall;
@@ -29,73 +29,15 @@ public class CubeProperties : MonoBehaviour {
     public GameObject gCube4;
 
     public bool bIsFalling = false;
-    public bool bJustFell = false;
-    public bool bGroupSplitted = false;
-    public bool bWillFall = false;
-
-    public bool bInList = false;
 
     public void Fall()
     {
-        if (bJustFell)
-            return;
-
-        bool bLoop = true;
-
-        try
-        {
-            GameObject gBeneathLoop = gCubeBeneath;
-
-            while (bLoop)
-            {
-                try
-                {
-                    if (gBeneathLoop.GetComponent<CubeProperties>().gCubeBeneath == null)
-                        break;
-
-                    gBeneathLoop = gBeneathLoop.GetComponent<CubeProperties>().gCubeBeneath;
-
-                    if (gBeneathLoop.GetComponent<CubeProperties>().iRow <= 1 && !gBeneathLoop.GetComponent<CubeProperties>().bJustFell)
-                        return;
-                }
-                catch
-                {
-                    break;
-                }
-            }
-        }
-        catch { }
-
         GetComponent<CubeFall>().enabled = true;
         GetComponent<Rigidbody>().isKinematic = false;
 
-        if (bInList)
-        {
-            TetroDismount.lListOfWall(iWall)[iRow - 1].Remove(TetroDismount.lListOfWall(iWall)[iRow - 1].Find(obj => obj.name == name && obj.GetComponent<CubeProperties>().iCubeID == iCubeID));
-            bInList = false;
-        }
+        TetroDismount.lListOfWall(iWall)[iRow - 1].Remove(  TetroDismount.lListOfWall(iWall)[iRow - 1].Find(obj => obj.name == name && obj.GetComponent<CubeProperties>().iCubeID == iCubeID));
 
-        //if (gCubeAbove != null)
-          //  gCubeAbove.GetComponent<CubeProperties>().SearchVertical();
-
-        bJustFell = true;
         bIsFalling = true;
-
-        if (!bGroupSplitted)
-        {
-            if (gCube1 != null && gameObject != gCube1 && !gCube1.GetComponent<CubeProperties>().bJustFell)
-                gCube1.GetComponent<CubeProperties>().Fall();
-
-            if (gCube1 != null && gameObject != gCube2 && !gCube2.GetComponent<CubeProperties>().bJustFell)
-                gCube2.GetComponent<CubeProperties>().Fall();
-
-            if (gCube3 != null && gameObject != gCube3 && !gCube3.GetComponent<CubeProperties>().bJustFell)
-                gCube3.GetComponent<CubeProperties>().Fall();
-
-            if (gCube4 != null && gameObject != gCube4 && !gCube4.GetComponent<CubeProperties>().bJustFell)
-                gCube4.GetComponent<CubeProperties>().Fall();
-        }
-
         UpdatePosition();
     }
 
@@ -142,46 +84,29 @@ public class CubeProperties : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Bullet")
+        try
         {
-            Hit();
-        }
-
-        else if (collision.gameObject.transform.position.y + 0.5f < iRow && bIsFalling && (collision.gameObject.tag == "Plane" || !collision.gameObject.GetComponent<CubeProperties>().bIsFalling))
-        {
-            bIsFalling = false;
-
-            GetComponent<CubeFall>().enabled = false;
-            GetComponent<Rigidbody>().isKinematic = true;
-            UpdateYPosition();
-            Vector3 GlobalPos = transform.position;
-
-            iRow = (int)Mathf.Round(Vector3.Distance(GlobalPos, new Vector3(GlobalPos.x, -0.5f, GlobalPos.z)));
-
-            TetroDismount.lListOfWall(iWall)[iRow - 1].Add(gameObject);
-            bInList = true;
-
-            if (iRow == TetroDismount.iCompleted + 1)
-                TetroDismount.iCompleted++;
-
-            SearchVertical();
-            SearchHorizontal();
-
-            if (!bGroupSplitted)
+            if (collision.gameObject.transform.position.y + 0.5f < iRow && bIsFalling && (collision.gameObject.tag == "Plane" || !collision.gameObject.GetComponent<CubeProperties>().bIsFalling))
             {
-                if (gCube1 != null && gameObject != gCube1)
-                    gCube1.GetComponent<CubeProperties>().OnCollisionEnter(collision);
+                bIsFalling = false;
 
-                if (gCube2 != null && gameObject != gCube2)
-                    gCube2.GetComponent<CubeProperties>().OnCollisionEnter(collision);
+                GetComponent<CubeFall>().enabled = false;
+                GetComponent<Rigidbody>().isKinematic = true;
+                UpdateYPosition();
+                Vector3 GlobalPos = transform.position;
 
-                if (gCube3 != null && gameObject != gCube3)
-                    gCube3.GetComponent<CubeProperties>().OnCollisionEnter(collision);
+                iRow = (int)Mathf.Round(Vector3.Distance(GlobalPos, new Vector3(GlobalPos.x, -0.5f, GlobalPos.z)));
 
-                if (gCube4 != null && gameObject != gCube4)
-                    gCube4.GetComponent<CubeProperties>().OnCollisionEnter(collision);
+                TetroDismount.lListOfWall(iWall)[iRow - 1].Add(gameObject);
+
+                if (iRow == TetroDismount.iCompleted + 1)
+                    TetroDismount.iCompleted++;
+            
+                SearchVertical();
+                SearchHorizontal();
             }
         }
+        catch { }
     }
 
     public void UpdatePosition()
@@ -195,16 +120,22 @@ public class CubeProperties : MonoBehaviour {
         transform.rotation = new Quaternion();
     }
 
-    public void Hit()
+    public List<GameObject> GetHighestCube()
     {
-        fHealth -= 1;
-        if (fHealth <= 0)
-        {
-            try { gCubeAbove.GetComponent<CubeProperties>().gCubeBeneath = null; }
-            catch { }
-            //TetroDismount.WillBeDestroyed(iRow, iWall);
-            TetroDismount.lListOfWall(iWall)[iRow - 1].Remove(TetroDismount.lListOfWall(iWall)[iRow - 1].Find(obj => obj.name == name && obj.GetComponent<CubeProperties>().iCubeID == iCubeID));
-            Destroy(gameObject);
-        }
+        List<GameObject> Result = new List<GameObject>();
+
+        if (gCube1.name != name && gCube1.GetComponent<CubeProperties>().iColumn != iColumn && gCube1.transform.position.y >= gCube2.transform.position.y && gCube1.transform.position.y >= gCube3.transform.position.y && gCube1.transform.position.y >= gCube4.transform.position.y)
+            Result.Add(gCube1);
+
+        if (gCube2.name != name && gCube2.GetComponent<CubeProperties>().iColumn != iColumn && gCube2.transform.position.y >= gCube1.transform.position.y && gCube2.transform.position.y >= gCube3.transform.position.y && gCube2.transform.position.y >= gCube4.transform.position.y)
+            Result.Add(gCube2);
+
+        if (gCube3.name != name && gCube3.GetComponent<CubeProperties>().iColumn != iColumn && gCube3.transform.position.y >= gCube1.transform.position.y && gCube3.transform.position.y >= gCube2.transform.position.y && gCube3.transform.position.y >= gCube4.transform.position.y)
+            Result.Add(gCube3);
+
+        if (gCube4.name != name && gCube4.GetComponent<CubeProperties>().iColumn != iColumn && gCube4.transform.position.y >= gCube2.transform.position.y && gCube4.transform.position.y >= gCube3.transform.position.y && gCube4.transform.position.y >= gCube1.transform.position.y)
+            Result.Add(gCube4);
+
+        return Result;
     }
 }

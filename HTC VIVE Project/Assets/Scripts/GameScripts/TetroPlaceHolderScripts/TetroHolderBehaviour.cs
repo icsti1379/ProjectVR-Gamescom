@@ -5,7 +5,6 @@ public class TetroHolderBehaviour : MonoBehaviour {
 
     TetroHolderProperties tProperties;
     bool bIncorrectSpawn = false;
-    bool bCorrected = false;
 
     private void Start()
     {
@@ -13,7 +12,7 @@ public class TetroHolderBehaviour : MonoBehaviour {
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.CompareTag("Tetromino"))
+        if (!other.gameObject.CompareTag("Placeholder"))
         {
             if (tProperties.bFalling)
             {
@@ -40,16 +39,16 @@ public class TetroHolderBehaviour : MonoBehaviour {
                 {
                     tProperties.transform.rotation = new Quaternion();
                     tProperties.bRotating = false;
+                    tProperties.transform.position = new Vector3();
                 }
 
                 tProperties.bNeedToCheck = false;
                 tProperties.bCheckedFrame = 0;
                 tProperties.UpdatePosition();
             }
-            else if (other.gameObject.CompareTag("Border") && tProperties.bInitiate)
+            else if (other.gameObject.CompareTag("Border"))
             {
                 bIncorrectSpawn = true;
-                tProperties.bInitiate = false;
 
                 if (tProperties.iColumn < 5)
                     tProperties.iColumn++;
@@ -59,8 +58,8 @@ public class TetroHolderBehaviour : MonoBehaviour {
 
                 tProperties.UpdateTetro();
                 tProperties.UpdatePosition();
-                tProperties.tPropertiesOfSpawn.GetComponent<TetroProperties>().ReplaceBorder();
             }
+
         }
     }
 
@@ -83,6 +82,5 @@ public class TetroHolderBehaviour : MonoBehaviour {
     {
         if (bIncorrectSpawn)
             bIncorrectSpawn = false;
-        tProperties.tPropertiesOfSpawn.GetComponent<TetroProperties>().ReplaceBorder();
     }
 }

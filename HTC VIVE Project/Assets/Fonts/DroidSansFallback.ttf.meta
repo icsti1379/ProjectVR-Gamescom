@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c42888609cf925543a7e7f1ab213a25f
+guid: 6958ab1c384e24145bedc55bf8a136f8
 timeCreated: 1485781027
 licenseType: Pro
 TrueTypeFontImporter:
@@ -11,7 +11,8 @@ TrueTypeFontImporter:
   includeFontData: 1
   fontNames:
   - Droid Sans Fallback
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: c42888609cf925543a7e7f1ab213a25f, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

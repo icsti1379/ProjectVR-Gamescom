@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3ed6a4835cd881f48a0b32e84b7d0f2f
+guid: ee8aab4e77cab764091f3bac034ca518
 timeCreated: 1485781027
 licenseType: Pro
 TrueTypeFontImporter:
@@ -11,7 +11,8 @@ TrueTypeFontImporter:
   includeFontData: 1
   fontNames:
   - NanumGothic
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 3ed6a4835cd881f48a0b32e84b7d0f2f, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

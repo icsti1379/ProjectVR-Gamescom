@@ -107,8 +107,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   step: 1
-  primaryTargetTag: Cube
-  secondaryTargetTag: Cube
+  primaryTargetTag: Tetromino
+  secondaryTargetTag: Tetromino
 --- !u!135 &135000014211896522
 SphereCollider:
   m_ObjectHideFlags: 1

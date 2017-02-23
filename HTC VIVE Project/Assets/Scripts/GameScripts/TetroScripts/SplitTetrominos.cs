@@ -83,7 +83,6 @@ public class SplitTetrominos : MonoBehaviour {
         rb.isKinematic = true;
 
         TetroDismount.lListOfWall(tCube.iWall)[tCube.iRow - 1].Add(gCubeSpawned);
-        tCube.bInList = true;
 
         return gCubeSpawned;
     }

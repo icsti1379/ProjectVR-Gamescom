@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1fb43b868b604d6489a22c7e3c0cb000
+guid: 6db9f14da4dd47d43be5bb590eee98b8
 timeCreated: 1485780997
 licenseType: Pro
 TrueTypeFontImporter:
@@ -11,7 +11,8 @@ TrueTypeFontImporter:
   includeFontData: 1
   fontNames:
   - Noto Naskh Arabic UI
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 1fb43b868b604d6489a22c7e3c0cb000, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

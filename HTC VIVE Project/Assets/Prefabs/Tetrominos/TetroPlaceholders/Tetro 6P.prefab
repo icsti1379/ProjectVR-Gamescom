@@ -102,9 +102,7 @@ MonoBehaviour:
   bCheckedFrameFalling: 0
   bNeedToCheck: 0
   bFalling: 0
-  iTimesCorrected: 0
-  bInitiate: 1
-  tPropertiesOfSpawn: {fileID: 0}
+  fProperties: {fileID: 0}
 --- !u!114 &114000011606766510
 MonoBehaviour:
   m_ObjectHideFlags: 1
