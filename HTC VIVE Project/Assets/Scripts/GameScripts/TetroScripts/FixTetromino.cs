@@ -20,7 +20,7 @@ public class FixTetromino : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Tetromino") || collision.gameObject.CompareTag("Plane"))
+        if (collision.gameObject.CompareTag("Cube") || collision.gameObject.CompareTag("Plane"))
         {
             TetroFall tFall = GetComponent<TetroFall>();
             tFall.enabled = false;                              // Stops the Tetromino from falling

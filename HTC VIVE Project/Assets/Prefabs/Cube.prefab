@@ -27,7 +27,7 @@ GameObject:
   - 114: {fileID: 114000012228385400}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Tetromino
+  m_TagString: Cube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,6 +136,9 @@ MonoBehaviour:
   gCube3: {fileID: 0}
   gCube4: {fileID: 0}
   bIsFalling: 0
+  bJustFell: 0
+  bGroupSplitted: 0
+  bWillFall: 0
 --- !u!114 &114000012661916744
 MonoBehaviour:
   m_ObjectHideFlags: 1

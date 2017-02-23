@@ -32,6 +32,7 @@ public class TetroProperties : MonoBehaviour {
     public int iColumn3;
     public int iColumn4;
 
+
     public Vector3 vRotation;
 
     /// <summary>
@@ -82,7 +83,7 @@ public class TetroProperties : MonoBehaviour {
         if (iType == 7)
             return;
 
-        if (iType > 3)
+        if (iType != 3)
         {
             transform.Rotate(new Vector3(0, 0, iAngle));
             vRotation += new Vector3(0, 0, iAngle);
@@ -198,5 +199,55 @@ public class TetroProperties : MonoBehaviour {
         vPositionCube2 = vPositionCube + vPos2;
         vPositionCube3 = vPositionCube + vPos3;
         vPositionCube4 = vPositionCube + vPos4;
+    }
+
+    public Vector3[] CalculateLeftRight()
+    {
+        CalculateCubes();
+        Vector3[] VectorArray = new Vector3[4];
+
+        if (iWall == 1 || iWall == 3)
+        {
+            VectorArray[0] = vPositionCube;
+            VectorArray[1] = vPositionCube2;
+            VectorArray[2] = vPositionCube3;
+            VectorArray[3] = vPositionCube4;
+            BubbleSort(VectorArray);
+        }
+
+        return VectorArray;
+    }
+
+    public void BubbleSort(Vector3[] VectorArray)
+    {
+        for (int x = VectorArray.Count() - 1; x > 0; x--)
+        {
+            for (int y = 0; y < x; y++)
+            {
+                if (VectorArray[y].x > VectorArray[y + 1].x)
+                {
+                    Vector3 ElementToChange = VectorArray[y];
+                    VectorArray[y] = VectorArray[y + 1];
+                    VectorArray[y + 1] = ElementToChange;
+                }
+            }
+        }
+    }
+
+    public void ReplaceBorder()
+    {
+        Vector3[] LeftRight = CalculateLeftRight();
+
+        if (iWall == 1 || iWall == 3)
+        {
+            SpawnTetromino.gBorderPlacement11.transform.position = new Vector3(LeftRight[0].x - 0.5f, SpawnTetromino.iSpawnPosY / 2, LeftRight[0].z + 0.5f);
+            SpawnTetromino.gBorderPlacement22.transform.position = new Vector3(LeftRight[0].x - 0.5f, SpawnTetromino.iSpawnPosY / 2, LeftRight[0].z - 0.5f);
+            SpawnTetromino.gBorderPlacement33.transform.position = new Vector3(LeftRight[3].x + 0.5f, SpawnTetromino.iSpawnPosY / 2, LeftRight[0].z + 0.5f);
+            SpawnTetromino.gBorderPlacement44.transform.position = new Vector3(LeftRight[3].x + 0.5f, SpawnTetromino.iSpawnPosY / 2, LeftRight[0].z - 0.5f);
+        }
+        SpawnTetromino.gBorderPlacement11.transform.localScale = new Vector3(0.05f, SpawnTetromino.iSpawnPosY, 0.05f);
+        SpawnTetromino.gBorderPlacement22.transform.localScale = new Vector3(0.05f, SpawnTetromino.iSpawnPosY, 0.05f);
+        SpawnTetromino.gBorderPlacement33.transform.localScale = new Vector3(0.05f, SpawnTetromino.iSpawnPosY, 0.05f);
+        SpawnTetromino.gBorderPlacement44.transform.localScale = new Vector3(0.05f, SpawnTetromino.iSpawnPosY, 0.05f);
     }
 }

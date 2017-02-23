@@ -18,6 +18,23 @@ public class SpawnTetromino : MonoBehaviour
     /// </summary>
     int iTetroType;
 
+    public GameObject gBorderPlacement1;
+
+    public GameObject gBorderPlacement2;
+
+    public GameObject gBorderPlacement3;
+
+    public GameObject gBorderPlacement4;
+
+    public static GameObject gBorderPlacement11;
+
+    public static GameObject gBorderPlacement22;
+
+    public static GameObject gBorderPlacement33;
+
+    public static GameObject gBorderPlacement44;
+
+
 
 
     /// <summary>
@@ -94,7 +111,7 @@ public class SpawnTetromino : MonoBehaviour
     /// Falling speed of the Tetromino, indicates how much time passes between falling
     /// </summary>
     [SerializeField]
-    [Range(0.2f, 2)]
+    [Range(0.05f, 2)]
     float fFallingSpeed;
 
 
@@ -156,6 +173,11 @@ public class SpawnTetromino : MonoBehaviour
 
     void Start()
     {
+        gBorderPlacement11 = gBorderPlacement1;
+        gBorderPlacement22 = gBorderPlacement2;
+        gBorderPlacement33 = gBorderPlacement3;
+        gBorderPlacement44 = gBorderPlacement4;
+
         iTetroID = 0;
         bFirstCube = true;
         TetroFall.fSpeed = fFallingSpeed;
@@ -180,28 +202,32 @@ public class SpawnTetromino : MonoBehaviour
             bTetroSplitted = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (gTetroSpawn != null)
         {
-            tPropertiesPMoving = gTetroSpawnPMoving.GetComponent<TetroHolderProperties>();
 
-            if (!tPropertiesPMoving.bMovingRight && !tPropertiesPMoving.bRotating)
-                tPropertiesPMoving.LookIfAbleToMove(-1);
-        }
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                tPropertiesPMoving = gTetroSpawnPMoving.GetComponent<TetroHolderProperties>();
 
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            tPropertiesPMoving = gTetroSpawnPMoving.GetComponent<TetroHolderProperties>();
+                if (!tPropertiesPMoving.bMovingRight && !tPropertiesPMoving.bRotating)
+                    tPropertiesPMoving.LookIfAbleToMove(-1);
+            }
 
-            if(!tPropertiesPMoving.bMovingLeft && !tPropertiesPMoving.bRotating)
-                tPropertiesPMoving.LookIfAbleToMove(1);
-        }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                tPropertiesPMoving = gTetroSpawnPMoving.GetComponent<TetroHolderProperties>();
 
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            tPropertiesPMoving = gTetroSpawnPMoving.GetComponent<TetroHolderProperties>();
+                if (!tPropertiesPMoving.bMovingLeft && !tPropertiesPMoving.bRotating)
+                    tPropertiesPMoving.LookIfAbleToMove(1);
+            }
 
-            if (!tPropertiesPMoving.bMovingLeft && !tPropertiesPMoving.bMovingRight)
-                tPropertiesPMoving.LookIfAbleToRotate();
+            else if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                tPropertiesPMoving = gTetroSpawnPMoving.GetComponent<TetroHolderProperties>();
+
+                if (!tPropertiesPMoving.bMovingLeft && !tPropertiesPMoving.bMovingRight)
+                    tPropertiesPMoving.LookIfAbleToRotate();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -222,7 +248,7 @@ public class SpawnTetromino : MonoBehaviour
     /// </summary>
     void SpawnNewTetromino()
     {
-        int iRandomTetro = Random.Range(1, 2);
+        int iRandomTetro = Random.Range(1, 8);
         iRandomColumn = Random.Range(2, iMapScale);
         iRandomWall = Random.Range(1, 2);
 
@@ -342,5 +368,9 @@ public class SpawnTetromino : MonoBehaviour
 
         tPropertiesPMoving.SynchroniseWithTetro();
         tPropertiesPFalling.SynchroniseWithTetro();
+
+        tProperties.ReplaceBorder();
     }
+
+
 }
