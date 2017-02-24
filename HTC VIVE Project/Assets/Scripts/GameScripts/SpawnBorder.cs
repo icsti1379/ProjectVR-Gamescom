@@ -37,7 +37,7 @@ public class SpawnBorder : MonoBehaviour {
     void Start ()
     {
         iMapScale = iTetrisMapScale;
-        iSpawnPosY = iTetroSpawnPosY + 3;
+        //iSpawnPosY = iTetroSpawnPosY + 3;
         SpawnTetromino.iMapScale = iTetrisMapScale;
         SpawnTetromino.iSpawnPosY = iTetroSpawnPosY;
 

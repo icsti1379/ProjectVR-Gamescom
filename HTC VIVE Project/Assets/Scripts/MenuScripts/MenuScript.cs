@@ -6,7 +6,6 @@ using System.Collections;
 public class MenuScript : MonoBehaviour
 {
     //TODO: Before finish delete all debug comments!
-    //TODO: Delete options menu if not needed
 
     /// <summary>
     /// Enum of all menu states.
@@ -15,30 +14,29 @@ public class MenuScript : MonoBehaviour
     {
         Main,
         Player,
-        //Options,
         Help,
         Highscore,
         Credits
     }
 
     #region variables
-    //TODO: Delete options menu if not needed
-
+    
     // Variable for define current state.
     public MenuStates currentState;
 
     // Menu panel objects as GameObjects.
     public GameObject mainMenu;
     public GameObject playerMenu;
-    //public GameObject optionsMenu;
     public GameObject helpMenu;
     public GameObject highscoreMenu;
     public GameObject creditsMenu;
     
     // Player menu toggles
     public bool isSelected;
-    public Toggle IsTutorialToggle;
-    
+    public Toggle IsToggleEasy;
+    public Toggle IsToggleNormal;
+    public Toggle IsToggleHard;
+
     #endregion
 
 
@@ -68,7 +66,6 @@ public class MenuScript : MonoBehaviour
                 // Sets active gameobject for main menu
                 mainMenu.SetActive(true);
                 playerMenu.SetActive(false);
-                //optionsMenu.SetActive(false);
                 helpMenu.SetActive(false);
                 highscoreMenu.SetActive(false);
                 creditsMenu.SetActive(false);
@@ -78,28 +75,16 @@ public class MenuScript : MonoBehaviour
                 // Sets active gameobject for player menu
                 playerMenu.SetActive(true);
                 mainMenu.SetActive(false);
-                //optionsMenu.SetActive(false);
                 helpMenu.SetActive(false);
                 highscoreMenu.SetActive(false);
                 creditsMenu.SetActive(false);
                 break;
-
-            //case MenuStates.Options:
-            //    // Sets active gameobject for options menu
-            //    //optionsMenu.SetActive(true);
-            //    mainMenu.SetActive(false);
-            //    playerMenu.SetActive(false);
-            //    helpMenu.SetActive(false);
-            //    highscoreMenu.SetActive(false);
-            //    creditsMenu.SetActive(false);
-            //    break;
 
             case MenuStates.Help:
                 // Sets active gameobject for help menu
                 helpMenu.SetActive(true);
                 mainMenu.SetActive(false);
                 playerMenu.SetActive(false);
-                //optionsMenu.SetActive(false);
                 highscoreMenu.SetActive(false);
                 creditsMenu.SetActive(false);
                 break;
@@ -109,7 +94,6 @@ public class MenuScript : MonoBehaviour
                 highscoreMenu.SetActive(true);
                 mainMenu.SetActive(false);
                 playerMenu.SetActive(false);
-                //optionsMenu.SetActive(false);
                 helpMenu.SetActive(false);
                 creditsMenu.SetActive(false);
                 break;
@@ -119,7 +103,6 @@ public class MenuScript : MonoBehaviour
                 creditsMenu.SetActive(true);
                 mainMenu.SetActive(false);
                 playerMenu.SetActive(false);
-                //optionsMenu.SetActive(false);
                 helpMenu.SetActive(false);
                 highscoreMenu.SetActive(false);
                 break;
@@ -155,17 +138,15 @@ public class MenuScript : MonoBehaviour
         if (isSelected == true)
         {
             // Log activity
-            Debug.Log("Load TutorialScene");
+            Debug.Log("Load game");
 
-            SceneManager.LoadScene("TutorialScene");
+            SceneManager.LoadScene("GameScene");
         }
 
         else
         {
             // Log activity
-            Debug.Log("Load GameScene");
-            
-            SceneManager.LoadScene("GameScene");
+            Debug.Log("Select Difficulty first");
         }
     }
 
@@ -206,8 +187,6 @@ public class MenuScript : MonoBehaviour
         // Log activity
         Debug.Log("Highscore button clicked.");
 
-        
-
         // Change menu state
         currentState = MenuStates.Highscore;
     }
@@ -234,16 +213,38 @@ public class MenuScript : MonoBehaviour
     /// </summary>
     public void ActiveToggle()
     {
-        if (IsTutorialToggle.isOn)
+        if (IsToggleEasy.isOn)
         {
             // Log activity
-            Debug.Log("Play tutorial first is selected.");
+            Debug.Log("Easy selected.");
+
+            
+            TetroFall.fSpeed = 0.6f;
+            SpawnBorder.iSpawnPosY = 30;
+
             isSelected = true;
         }
 
-        else
+        if (IsToggleNormal)
         {
-            isSelected = false;
+            // Log activity
+            Debug.Log("Normal selected.");
+
+            TetroFall.fSpeed = 0.4f;
+            SpawnBorder.iSpawnPosY = 25;
+
+            isSelected = true;
+        }
+
+        else if (IsToggleHard)
+        {
+            // Log activity
+            Debug.Log("Hard selected.");
+
+            TetroFall.fSpeed = 0.4f;
+            SpawnBorder.iSpawnPosY = 23;
+
+            isSelected = true;
         }
     }
 

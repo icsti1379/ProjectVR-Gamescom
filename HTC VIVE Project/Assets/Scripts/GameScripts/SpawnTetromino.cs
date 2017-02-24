@@ -186,8 +186,9 @@ public class SpawnTetromino : MonoBehaviour
 
         iTetroID = 0;
         bFirstCube = true;
-        TetroFall.fSpeed = fFallingSpeed;
-        fNormalSpeed = fFallingSpeed;
+        //TetroFall.fSpeed = fFallingSpeed;
+        //fNormalSpeed = fFallingSpeed;
+        fNormalSpeed = TetroFall.fSpeed;
         bTetroSplitted = false;
     }
 
