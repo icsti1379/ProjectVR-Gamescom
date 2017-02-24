@@ -15,13 +15,30 @@ public class moveBullet : MonoBehaviour
     [SerializeField]
     string secondaryTargetTag;
 
+    float tranformDist = 3;
+
+    SphereCollider sphereCollider;
+    private Vector3 dist;
+    private float curdist;
+
+    [SerializeField]
+    GameObject explosionPrefab;
+
+    AudioSource source;
+    AudioClip shootSound;
+
+    private ParticleSystem explo;
+
     public GameObject centerObject { get; set; }
 
     // Use this for initialization
     // holt sich sein ziel
     void Start()
     {
+        source = GetComponent<AudioSource>();
         centerObject = FindClosestTetromino();
+        sphereCollider = transform.GetComponent<SphereCollider>();
+        source.PlayOneShot(shootSound);
     }
 
     /// <summary>
@@ -32,6 +49,8 @@ public class moveBullet : MonoBehaviour
         if (centerObject == null)
             centerObject = GameObject.FindGameObjectWithTag("Player");
         transform.position = Vector3.MoveTowards(transform.position, centerObject.transform.position, step);
+        dist = centerObject.transform.position - transform.position;
+        curdist = dist.sqrMagnitude;
     }
 
     /// <summary>
@@ -40,8 +59,16 @@ public class moveBullet : MonoBehaviour
     /// <param name="col"></param>
     public void OnCollisionEnter(Collision col)
     {
+        //explo = gameObject.GetComponent<ParticleSystem>();
         if (col.gameObject.tag == primaryTargetTag || col.gameObject.tag == secondaryTargetTag || col.gameObject.tag == "Player")
+        {
+            //explo.enableEmission = true;
+            //explo.Play();
+            //explo = GetComponent<ParticleSystem>();
+            //explo.Play();
+            Instantiate(explosionPrefab, centerObject.transform);
             Destroy(gameObject);
+        }
     }
 
 

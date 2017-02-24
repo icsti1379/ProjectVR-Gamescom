@@ -16,6 +16,11 @@ public class CreepNav2 : MonoBehaviour
 
     NavMeshAgent agent;
     NavMeshPath navMeshPath;
+    Animator animator;
+    AudioSource source;
+
+    [SerializeField]
+    AudioClip hornSound;
 
     [SerializeField]
     private float speed;
@@ -30,9 +35,17 @@ public class CreepNav2 : MonoBehaviour
 
     [SerializeField]
     float minDistance;
+
     private Vector3 rayDirectionWP;
     private string stringIdent;
     private string wpAdd;
+    float timer;
+
+    [SerializeField]
+    private float enrageCreep;
+
+    private int i;
+    private bool striking;
 
     // Use this for initialization
     void Start ()
@@ -43,19 +56,65 @@ public class CreepNav2 : MonoBehaviour
         FindWaypoints();
         agent = GetComponent<NavMeshAgent>();
         navMeshPath = new NavMeshPath();
+        animator = GetComponent<Animator>();
+        source = GetComponent<AudioSource>();
+        striking = false;
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
+        timer += Time.deltaTime;
         rayDirection = rcTarget.transform.position - transform.position;
-        if (Physics.Raycast(transform.position, rayDirection, out hit))
+        if (Physics.Raycast(transform.position , rayDirection, out hit))
         {
-            if (hit.transform == rcTarget.transform)
-                agent.SetDestination(rcTarget.transform.position);
+            if (hit.transform == rcTarget.transform && !TetroDismount.bDismountInProcess)
+            {
+                gameObject.transform.LookAt(rcTarget.transform.position);
+                gameObject.transform.position += gameObject.transform.forward * speed * Time.deltaTime;
+                //source.PlayOneShot(hornSound);
+                //agent.SetDestination(rcTarget.transform.position);
+                //agent.speed = 20;
+            }
+
+            else if (timer > enrageCreep && !TetroDismount.bDismountInProcess)
+            {
+                gameObject.transform.LookAt(rcTarget.transform.position);
+                gameObject.transform.position += gameObject.transform.forward * speed * Time.deltaTime;
+            }
+
             else
                 GetWaypoint();
         }
+
+        if ((enrageCreep - 1) > timer && timer > (enrageCreep - 2))
+            source.Play();
+
+        Debug.DrawRay(transform.position, rayDirection, Color.red);
+        animator.SetFloat("SkeletonSpeed", speed);
+        animator.SetFloat("SkeletonSpeedNav", agent.speed);
+
+
+        //Physics.Raycast(transform.position, rayDirection, out hit);
+        //if (hit.transform == rcTarget.transform)
+        //    i = 1;
+        //else if (timer > enrageCreep)
+        //    i = 2;
+        //else
+        //    i = 3;
+
+        //switch(i)
+        //{
+        //    case 1:
+        //        agent.SetDestination(rcTarget.transform.position);
+        //        break;
+        //    case 2:
+        //        agent.SetDestination(rcTarget.transform.position);
+        //        break;
+        //    case 3:
+        //        GetWaypoint
+        //        break;
+        //}
     }
 
     //bool PlayerInLineOfSight(GameObject rcTarget)
@@ -77,8 +136,8 @@ public class CreepNav2 : MonoBehaviour
     void GetWaypoint()
     {
         distance = Vector3.Distance(gameObject.transform.position, sortedWaypointList[num].transform.position);
-        rayDirectionWP = sortedWaypointList[num].transform.position - transform.position;
-        Physics.Raycast(transform.position, rayDirectionWP, out hit2);
+        //rayDirectionWP = sortedWaypointList[num].transform.position - transform.position;
+        //Physics.Raycast(transform.position, rayDirectionWP, out hit2);
 
         if (distance > minDistance)
             move();
@@ -96,7 +155,9 @@ public class CreepNav2 : MonoBehaviour
     void move()
     {
         gameObject.transform.LookAt(sortedWaypointList[num].transform.position);
-        gameObject.transform.position += gameObject.transform.forward * speed * Time.deltaTime;
+        //gameObject.transform.position += gameObject.transform.forward * speed * Time.deltaTime;
+        agent.SetDestination(sortedWaypointList[num].transform.position);
+        //animation.play
     }
 
     void FindWaypoints()
@@ -115,5 +176,19 @@ public class CreepNav2 : MonoBehaviour
         //{
         //    sortedWaypointList.Add(GameObject.Find("Waypoint" + i.ToString()));
         //}
+    }
+
+    public void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "Tetromino" || col.gameObject.tag == "damagedTetromino" || col.gameObject.tag == "Player")
+        {
+            //Destroy(gameObject);
+            speed = 0;
+            agent.speed = 0;
+            animator.SetBool("walking", false);
+            striking = true;
+            animator.SetBool("striking", striking);
+            Destroy(gameObject, 3f);
+        }
     }
 }

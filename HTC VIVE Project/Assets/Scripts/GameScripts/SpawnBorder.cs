@@ -6,8 +6,6 @@ public class SpawnBorder : MonoBehaviour {
     [SerializeField]
     GameObject gBorderPrefab;
 
-
-
     public static GameObject gBorder1;
 
     public static GameObject gBorder2;

@@ -4,23 +4,15 @@ using System.Collections;
 public class shootCannon : MonoBehaviour {
 
     [SerializeField]
-    private GameObject Bullet;
-
-    [SerializeField]
-    [Range(0f, 100f)]
-    private float spawnTime;
-
-    [SerializeField]
     string primaryTargetTag;
-
+    
     [SerializeField]
     string secondaryTargetTag;
 
     private bool targets;
+    private GameObject newInstance;
 
-    private float tTimer;
 
-    GameObject newInstance;
 
     // Use this for initialization
     void Start()
@@ -31,20 +23,19 @@ public class shootCannon : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        tTimer += Time.deltaTime;
 
-        if (tTimer >= spawnTime && CheckForTargets())
-        {
-            SpawnBullet();
-            tTimer = 0;
-        }
-        //SpawnBullet();
     }
 
-    void SpawnBullet()
+    public void SpawnBullet(GameObject projectile)
     {
-        newInstance = (GameObject)Instantiate(Bullet, transform);
-        newInstance.transform.position = transform.position;
+        if (CheckForTargets() && !TetroDismount.bDismountInProcess)
+        {
+            newInstance = (GameObject)Instantiate(projectile, transform);
+            newInstance.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+        }
+
+        else
+            return;
     }
 
     bool CheckForTargets()

@@ -16,6 +16,16 @@ public class TetroHolderProperties : MonoBehaviour {
     public Vector3 vPositionCube3;
     public Vector3 vPositionCube4;
 
+    private int iRow1;
+    private int iRow2;
+    private int iRow3;
+    private int iRow4;
+
+    private int iColumn1;
+    private int iColumn2;
+    private int iColumn3;
+    private int iColumn4;
+
     public Vector3 vRotation;
 
     public bool bRotating;
@@ -26,10 +36,6 @@ public class TetroHolderProperties : MonoBehaviour {
 
     public bool bNeedToCheck;
     public bool bFalling;
-
-    public int iTimesCorrected = 0;
-    public bool bInitiate = true;
-
 
     public TetroProperties tPropertiesOfSpawn;
 
@@ -148,7 +154,7 @@ public class TetroHolderProperties : MonoBehaviour {
         if (iType == 7)
             return;
 
-        if (iType != 3)
+        if (iType > 3)
         {
             transform.Rotate(new Vector3(0, 0, iAngle));
             vRotation += new Vector3(0, 0, iAngle);
@@ -158,12 +164,10 @@ public class TetroHolderProperties : MonoBehaviour {
 
         else if(iType != 3)
         {
-
             vRotation = tPropertiesOfSpawn.vRotation;
 
             if (vRotation.z >= 90)
             {
-                transform.position -= new Vector3(0, 1, 0);
                 vRotation -= new Vector3(0, 0, iAngle);
                 transform.Rotate(new Vector3(0, 0, -iAngle));
             }
@@ -190,6 +194,54 @@ public class TetroHolderProperties : MonoBehaviour {
         }
     }
 
+    private void CalculateCubeRowsCloumns()
+    {
+        CalculateCubes();
+
+        iRow1 = (int)Mathf.Round(Vector3.Distance(vPositionCube, new Vector3(vPositionCube.x, -0.5f, vPositionCube.z)));
+        iRow2 = (int)Mathf.Round(Vector3.Distance(vPositionCube2, new Vector3(vPositionCube2.x, -0.5f, vPositionCube2.z)));
+        iRow3 = (int)Mathf.Round(Vector3.Distance(vPositionCube3, new Vector3(vPositionCube3.x, -0.5f, vPositionCube3.z)));
+        iRow4 = (int)Mathf.Round(Vector3.Distance(vPositionCube4, new Vector3(vPositionCube4.x, -0.5f, vPositionCube4.z)));
+
+        iColumn1 = 0;
+        iColumn2 = 0;
+        iColumn3 = 0;
+        iColumn4 = 0;
+
+        if (iWall == 1)
+        {
+            iColumn1 = SpawnBorder.iMapScale - (int)(-vPositionCube.x + (SpawnBorder.iMapScale / 2 + 0.5f));
+            iColumn2 = SpawnBorder.iMapScale - (int)(-vPositionCube2.x + (SpawnBorder.iMapScale / 2 + 0.5f));
+            iColumn3 = SpawnBorder.iMapScale - (int)(-vPositionCube3.x + (SpawnBorder.iMapScale / 2 + 0.5f));
+            iColumn4 = SpawnBorder.iMapScale - (int)(-vPositionCube4.x + (SpawnBorder.iMapScale / 2 + 0.5f));
+        }
+
+        if (iWall == 3)
+        {
+            iColumn1 = (int)(-vPositionCube.x + ((float)SpawnBorder.iMapScale / 2 + 1.5));
+            iColumn2 = (int)(-vPositionCube2.x + ((float)SpawnBorder.iMapScale / 2 + 1.5));
+            iColumn3 = (int)(-vPositionCube3.x + ((float)SpawnBorder.iMapScale / 2 + 1.5));
+            iColumn4 = (int)(-vPositionCube4.x + ((float)SpawnBorder.iMapScale / 2 + 1.5));
+        }
+
+        if (iWall == 2)
+        {
+            iColumn1 = SpawnBorder.iMapScale - (int)(-vPositionCube.z + (SpawnBorder.iMapScale / 2 + 0.5f));
+            iColumn2 = SpawnBorder.iMapScale - (int)(-vPositionCube2.z + (SpawnBorder.iMapScale / 2 + 0.5f));
+            iColumn3 = SpawnBorder.iMapScale - (int)(-vPositionCube3.z + (SpawnBorder.iMapScale / 2 + 0.5f));
+            iColumn4 = SpawnBorder.iMapScale - (int)(-vPositionCube4.z + (SpawnBorder.iMapScale / 2 + 0.5f));
+        }
+
+        if (iWall == 4)
+        {
+            iColumn1 = (int)(-vPositionCube.z + (SpawnBorder.iMapScale / 2 + 0.5f)) - 1;
+            iColumn2 = (int)(-vPositionCube2.z + (SpawnBorder.iMapScale / 2 + 0.5f)) - 1;
+            iColumn3 = (int)(-vPositionCube3.z + (SpawnBorder.iMapScale / 2 + 0.5f)) - 1;
+            iColumn4 = (int)(-vPositionCube4.z + (SpawnBorder.iMapScale / 2 + 0.5f)) - 1;
+        }
+    }
+
+
     public void SynchroniseWithTetro()
     {
         iTetroID = tPropertiesOfSpawn.iTetroID;
@@ -206,6 +258,20 @@ public class TetroHolderProperties : MonoBehaviour {
             vPositionCube2 = tPropertiesOfSpawn.vPositionCube2;
             vPositionCube3 = tPropertiesOfSpawn.vPositionCube3;
             vPositionCube4 = tPropertiesOfSpawn.vPositionCube4;
+        }
+        catch { }
+
+        try
+        {
+            iRow1 = tPropertiesOfSpawn.iRow1;
+            iRow2 = tPropertiesOfSpawn.iRow2;
+            iRow3 = tPropertiesOfSpawn.iRow3;
+            iRow4 = tPropertiesOfSpawn.iRow4;
+
+            iColumn1 = tPropertiesOfSpawn.iColumn1;
+            iColumn2 = tPropertiesOfSpawn.iColumn2;
+            iColumn3 = tPropertiesOfSpawn.iColumn3;
+            iColumn4 = tPropertiesOfSpawn.iColumn4;
         }
         catch { }
     }
@@ -228,6 +294,10 @@ public class TetroHolderProperties : MonoBehaviour {
     {
         bNeedToCheck = true;
         bRotating = true;
+
+        if (iType == 1)
+            transform.position -= new Vector3(0, 1, 0);
+
         RotateTetro(90);
     }
 
@@ -252,7 +322,7 @@ public class TetroHolderProperties : MonoBehaviour {
             }
         }
 
-        else if (bNeedToCheck)
+        if (bNeedToCheck)
         {
             bCheckedFrame++;
 
@@ -263,25 +333,19 @@ public class TetroHolderProperties : MonoBehaviour {
                 bMovingRight = false;
                 bMovingLeft = false;
                 bNeedToCheck = false;
-                bInitiate = false;
 
 
                 if (bRotating)
                 {
                     transform.rotation = new Quaternion();
-                    //tPropertiesOfSpawn.transform.position += transform.localPosition;
-                    //transform.localPosition = new Vector3();
                     tPropertiesOfSpawn.RotateTetro(90);
                     bRotating = false;
                 }
 
                 UpdateTetro();
                 UpdatePosition();
-                tPropertiesOfSpawn.ReplaceBorder();
             }
         }
-        else if (!bNeedToCheck && bCheckedFrame > 0)
-            bCheckedFrame = 0;
     }
 
 

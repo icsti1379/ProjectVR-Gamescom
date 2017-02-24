@@ -19,8 +19,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000011009125582}
-  - 114: {fileID: 114000010968698182}
-  - 114: {fileID: 114000013701837844}
+  - 114: {fileID: 114000011470658008}
+  - 114: {fileID: 114000013118012566}
   m_Layer: 0
   m_Name: threatCannon
   m_TagString: Untagged
@@ -86,10 +86,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010802433376}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0.61, y: 0, z: 16.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_Children:
   - {fileID: 4000013935154552}
   - {fileID: 4000011757934676}
@@ -251,14 +251,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000014191923426}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43d424475c2c1a54181edda381ad45f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 7660789b4ff620a4f8ab4ced98e38ddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  speed: 0
-  primaryTargetTag: 
-  secondaryTargetTag: 
---- !u!114 &114000010968698182
+  speed: 15
+  primaryTargetTag: damagedTetromino
+  secondaryTargetTag: Tetromino
+--- !u!114 &114000011470658008
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -266,23 +266,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000010802433376}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f0a6d89541bcf34982a637367b80db4, type: 3}
+  m_Script: {fileID: 11500000, guid: a289844b8e3ada343b90c8781b9ab932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 31
+  Bullet: {fileID: 1000011882306454, guid: e206ea79ab040464cab43d1e712c372a, type: 2}
+  spawnTime: 5
+  primaryTargetTag: damagedTetromino
+  secondaryTargetTag: Tetromino
+--- !u!114 &114000013118012566
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010802433376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82884251ecbdb9a49b81c228e2ffc8ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 25
   centerObject: {fileID: 0}
---- !u!114 &114000013701837844
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010802433376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 603a6fe402f2c9644965ac7444a6a775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Bullet: {fileID: 1000011882306454, guid: e6d611264e5d6114ab46b74fefb61c1a, type: 2}
-  spawnTime: 1
-  primaryTargetTag: Cube
-  secondaryTargetTag: Cube
