@@ -16,16 +16,6 @@ public class TetroHolderProperties : MonoBehaviour {
     public Vector3 vPositionCube3;
     public Vector3 vPositionCube4;
 
-    private int iRow1;
-    private int iRow2;
-    private int iRow3;
-    private int iRow4;
-
-    private int iColumn1;
-    private int iColumn2;
-    private int iColumn3;
-    private int iColumn4;
-
     public Vector3 vRotation;
 
     public bool bRotating;
@@ -35,9 +25,18 @@ public class TetroHolderProperties : MonoBehaviour {
     public int bCheckedFrameFalling = 0;
 
     public bool bNeedToCheck;
-    public bool bFalling;
+
+    public int iTimesCorrected = 0;
+    public bool bInitiate = true;
+
+    public bool bFalling = false;
+    public bool bChangingWall = false;
+
+    int RotatingWall;
 
     public TetroProperties tPropertiesOfSpawn;
+    public TetroHolderProperties tPropertiesOfFall;
+    public Vector3[] LeftRight;
 
     /// <summary>
     /// Calculates the position of each Cube
@@ -49,47 +48,52 @@ public class TetroHolderProperties : MonoBehaviour {
         Vector3 v2;
         Vector3 v3;
 
-
         if (iType == 1)
         {
-            v1 = new Vector3(0, 1);
-            v2 = new Vector3(-1, 1);
-            v3 = new Vector3(-1, 2);
+            v1 = new Vector3(0, -1);
+            v2 = new Vector3(-1, 0);
+            v3 = new Vector3(-1, 1);
         }
 
         else if (iType == 2)
         {
-            v1 = new Vector3(-1, -1);
-            v2 = new Vector3(0, -1);
-            v3 = new Vector3(-1, -2);
+            v1 = new Vector3(0, 1);
+            v2 = new Vector3(-1, 0);
+            v3 = new Vector3(-1, -1);
         }
 
         else if (iType == 3)
         {
-            v1 = new Vector3(0, 0, -1);
-            v2 = new Vector3(0, 0, -2);
-            v3 = new Vector3(0, 0, -3);
+            v1 = new Vector3(1, 0);
+            v2 = new Vector3(-1, 0);
+            v3 = new Vector3(-2, 0);
         }
 
         else if (iType == 4)
         {
             v1 = new Vector3(-1, 0);
-            v2 = new Vector3(-2, 0);
-            v3 = new Vector3(-1, 1);
+            v2 = new Vector3(1, 0);
+            v3 = new Vector3(0, 1);
         }
 
         else if (iType == 5)
         {
-            v1 = new Vector3(0, -1);
-            v2 = new Vector3(0, -2);
-            v3 = new Vector3(-1, -2);
+            v1 = new Vector3(0, 1);
+            v2 = new Vector3(0, -1);
+            v3 = new Vector3(-1, -1);
         }
 
         else if (iType == 6)
         {
-            v1 = new Vector3(1, -1);
-            v2 = new Vector3(1, -2);
-            v3 = new Vector3(1, 0);
+            v1 = new Vector3(0, 1);
+            v2 = new Vector3(-1, 1);
+            v3 = new Vector3(0, -1);
+        }
+        else if (iType == 7)
+        {
+            v1 = new Vector3(-1, 0);
+            v2 = new Vector3(0, -1);
+            v3 = new Vector3(-1, -1);
         }
         else
         {
@@ -116,7 +120,6 @@ public class TetroHolderProperties : MonoBehaviour {
         vPositionCube4 = vPositionCube + vPos4;
     }
 
-
     /// <summary>
     /// Updates the Position of the Tetromino (Useful when Column or Wall needs to be changed)
     /// </summary>
@@ -126,27 +129,19 @@ public class TetroHolderProperties : MonoBehaviour {
         float fPosbig = SpawnTetromino.iMapScale / 2 + 0.5f;
 
         if (iWall == 1)
-        {
             transform.position += new Vector3(-transform.position.x + iColumn - fPosbig, 0, -transform.position.z + fPoslil);
-        }
 
         // Front
         else if (iWall == 3)
-        {
             transform.position += new Vector3(-transform.position.x + fPosbig - iColumn, 0, -transform.position.z + -fPoslil);
-        }
 
         // Right
         else if (iWall == 2)
-        {
             transform.position += new Vector3(-transform.position.x + fPoslil, 0, -transform.position.z + fPosbig - iColumn);
-        }
 
         // Left
         else if (iWall == 4)
-        {
             transform.position += new Vector3(-transform.position.x + -fPoslil, 0, -transform.position.z + iColumn - fPosbig);
-        }
     }
 
     public void RotateTetro(int iAngle)
@@ -154,98 +149,19 @@ public class TetroHolderProperties : MonoBehaviour {
         if (iType == 7)
             return;
 
-        if (iType > 3)
-        {
-            transform.Rotate(new Vector3(0, 0, iAngle));
-            vRotation += new Vector3(0, 0, iAngle);
-            if (vRotation.z >= 360)
-                vRotation.z -= 360;
-        }
+        vRotation = tPropertiesOfSpawn.vRotation;
 
-        else if(iType != 3)
-        {
-            vRotation = tPropertiesOfSpawn.vRotation;
-
-            if (vRotation.z >= 90)
-            {
-                vRotation -= new Vector3(0, 0, iAngle);
-                transform.Rotate(new Vector3(0, 0, -iAngle));
-            }
-            else
-            {
-                vRotation += new Vector3(0, 0, iAngle);
-                transform.Rotate(new Vector3(0, 0, iAngle));
-            }
-        }
-        else
-        {
-            vRotation = tPropertiesOfSpawn.vRotation;
-
-            if (vRotation.x >= 90)
-            {
-                vRotation -= new Vector3(iAngle, 0, 0);
-                transform.Rotate(new Vector3(-iAngle, 0, 0));
-            }
-            else
-            {
-                vRotation += new Vector3(iAngle, 0, 0);
-                transform.Rotate(new Vector3(iAngle, 0, 0));
-            }
-        }
+        transform.Rotate(new Vector3(0, 0, iAngle));
+        vRotation += new Vector3(0, 0, iAngle);
+        if (vRotation.z >= 360)
+            vRotation.z -= 360;
     }
-
-    private void CalculateCubeRowsCloumns()
-    {
-        CalculateCubes();
-
-        iRow1 = (int)Mathf.Round(Vector3.Distance(vPositionCube, new Vector3(vPositionCube.x, -0.5f, vPositionCube.z)));
-        iRow2 = (int)Mathf.Round(Vector3.Distance(vPositionCube2, new Vector3(vPositionCube2.x, -0.5f, vPositionCube2.z)));
-        iRow3 = (int)Mathf.Round(Vector3.Distance(vPositionCube3, new Vector3(vPositionCube3.x, -0.5f, vPositionCube3.z)));
-        iRow4 = (int)Mathf.Round(Vector3.Distance(vPositionCube4, new Vector3(vPositionCube4.x, -0.5f, vPositionCube4.z)));
-
-        iColumn1 = 0;
-        iColumn2 = 0;
-        iColumn3 = 0;
-        iColumn4 = 0;
-
-        if (iWall == 1)
-        {
-            iColumn1 = SpawnBorder.iMapScale - (int)(-vPositionCube.x + (SpawnBorder.iMapScale / 2 + 0.5f));
-            iColumn2 = SpawnBorder.iMapScale - (int)(-vPositionCube2.x + (SpawnBorder.iMapScale / 2 + 0.5f));
-            iColumn3 = SpawnBorder.iMapScale - (int)(-vPositionCube3.x + (SpawnBorder.iMapScale / 2 + 0.5f));
-            iColumn4 = SpawnBorder.iMapScale - (int)(-vPositionCube4.x + (SpawnBorder.iMapScale / 2 + 0.5f));
-        }
-
-        if (iWall == 3)
-        {
-            iColumn1 = (int)(-vPositionCube.x + ((float)SpawnBorder.iMapScale / 2 + 1.5));
-            iColumn2 = (int)(-vPositionCube2.x + ((float)SpawnBorder.iMapScale / 2 + 1.5));
-            iColumn3 = (int)(-vPositionCube3.x + ((float)SpawnBorder.iMapScale / 2 + 1.5));
-            iColumn4 = (int)(-vPositionCube4.x + ((float)SpawnBorder.iMapScale / 2 + 1.5));
-        }
-
-        if (iWall == 2)
-        {
-            iColumn1 = SpawnBorder.iMapScale - (int)(-vPositionCube.z + (SpawnBorder.iMapScale / 2 + 0.5f));
-            iColumn2 = SpawnBorder.iMapScale - (int)(-vPositionCube2.z + (SpawnBorder.iMapScale / 2 + 0.5f));
-            iColumn3 = SpawnBorder.iMapScale - (int)(-vPositionCube3.z + (SpawnBorder.iMapScale / 2 + 0.5f));
-            iColumn4 = SpawnBorder.iMapScale - (int)(-vPositionCube4.z + (SpawnBorder.iMapScale / 2 + 0.5f));
-        }
-
-        if (iWall == 4)
-        {
-            iColumn1 = (int)(-vPositionCube.z + (SpawnBorder.iMapScale / 2 + 0.5f)) - 1;
-            iColumn2 = (int)(-vPositionCube2.z + (SpawnBorder.iMapScale / 2 + 0.5f)) - 1;
-            iColumn3 = (int)(-vPositionCube3.z + (SpawnBorder.iMapScale / 2 + 0.5f)) - 1;
-            iColumn4 = (int)(-vPositionCube4.z + (SpawnBorder.iMapScale / 2 + 0.5f)) - 1;
-        }
-    }
-
 
     public void SynchroniseWithTetro()
     {
         iTetroID = tPropertiesOfSpawn.iTetroID;
         iType = tPropertiesOfSpawn.iType;
+        LeftRight = tPropertiesOfSpawn.LeftRight;
 
         iColumn = tPropertiesOfSpawn.iColumn;
         iWall = tPropertiesOfSpawn.iWall;
@@ -260,51 +176,149 @@ public class TetroHolderProperties : MonoBehaviour {
             vPositionCube4 = tPropertiesOfSpawn.vPositionCube4;
         }
         catch { }
-
-        try
-        {
-            iRow1 = tPropertiesOfSpawn.iRow1;
-            iRow2 = tPropertiesOfSpawn.iRow2;
-            iRow3 = tPropertiesOfSpawn.iRow3;
-            iRow4 = tPropertiesOfSpawn.iRow4;
-
-            iColumn1 = tPropertiesOfSpawn.iColumn1;
-            iColumn2 = tPropertiesOfSpawn.iColumn2;
-            iColumn3 = tPropertiesOfSpawn.iColumn3;
-            iColumn4 = tPropertiesOfSpawn.iColumn4;
-        }
-        catch { }
     }
 
     public void LookIfAbleToMove(int Direction)
     {
+        SynchroniseWithTetro();
+        CalculateLeftRight();
+
         if (Direction == -1)
+        {
+            if (CalculateColumn(LeftRight[0]) <= 2)
+                bChangingWall = true;
+
             bMovingLeft = true;
+            tPropertiesOfSpawn.iLastMovement = 0;
+        }
 
         else if (Direction == 1)
+        {
+            if (CalculateColumn(LeftRight[3]) >= 9)
+                bChangingWall = true;
+
             bMovingRight = true;
+            tPropertiesOfSpawn.iLastMovement = 1;
+        }
 
         bNeedToCheck = true;
 
-        iColumn += Direction;
-        UpdatePosition();
+        if (!bChangingWall)
+        {
+            iColumn += Direction;
+            UpdatePosition();
+        }
+        else
+        {
+            if (bMovingRight)
+            {
+                iWall++;
+
+                if (iWall > 4)
+                    iWall = 1;
+
+                iColumn = 2;
+
+                int z = (int)tPropertiesOfSpawn.vRotation.z;
+                Debug.Log(tPropertiesOfSpawn.vRotation.z);
+
+                if (z == 0)
+                {
+                    transform.Rotate(new Vector3(0, 90));
+                    vRotation.y += 90;
+                }
+                else if (z == 90)
+                {
+                    transform.Rotate(new Vector3(90, 0));
+                    vRotation.y += 90;
+                }
+                else if (z == 180)
+                {
+                    transform.Rotate(new Vector3(0, -90));
+                    vRotation.y += 90;
+                }
+                else if (z == 270)
+                {
+                    transform.Rotate(new Vector3(-90, 0));
+                    vRotation.y += 90;
+                }
+
+                RotatingWall = 90;
+
+                UpdatePosition();
+                CalculateLeftRight();
+
+                while (CalculateColumn(LeftRight[0]) < 2)
+                {
+                    iColumn++;
+                    UpdatePosition();
+                    CalculateLeftRight();
+                }
+                Log();
+            }
+
+            else if (bMovingLeft)
+            {
+                iWall--;
+
+                if (iWall < 1)
+                    iWall = 4;
+
+                iColumn = 9;
+
+                int z = (int)tPropertiesOfSpawn.vRotation.z;
+                Debug.Log(tPropertiesOfSpawn.vRotation.z);
+
+                if (z == 0)
+                {
+                    transform.Rotate(new Vector3(0, -90));
+                    vRotation.y -= 90;
+                }
+                else if (z == 90)
+                {
+                    transform.Rotate(new Vector3(-90, 0));
+                    vRotation.y -= 90;
+                }
+                else if (z == 180)
+                {
+                    transform.Rotate(new Vector3(0, 90));
+                    vRotation.y -= 90;
+                }
+                else if (z == 270)
+                {
+                    transform.Rotate(new Vector3(90, 0));
+                    vRotation.y -= 90;
+                }
+
+                RotatingWall = -90;
+
+                UpdatePosition();
+                CalculateLeftRight();
+
+                while (CalculateColumn(LeftRight[3]) > 9)
+                {
+                    iColumn--;
+                    UpdatePosition();
+                    CalculateLeftRight();
+                }
+                Log();
+            }
+        }
     }
 
     public void LookIfAbleToRotate()
     {
         bNeedToCheck = true;
         bRotating = true;
-
-        if (iType == 1)
-            transform.position -= new Vector3(0, 1, 0);
-
         RotateTetro(90);
+        tPropertiesOfSpawn.iLastMovement = 2;
     }
 
     public void LookToFall()
     {
-        transform.position -= new Vector3(0, 1, 0);
         bFalling = true;
+        transform.position -= new Vector3(0, 0.25f, 0);
+        tPropertiesOfSpawn.iLastMovement = 3;
     }
 
     public void Update()
@@ -315,10 +329,10 @@ public class TetroHolderProperties : MonoBehaviour {
 
             if (bCheckedFrameFalling > 2)
             {
-                bFalling = false;
                 bCheckedFrameFalling = 0;
                 transform.localPosition = new Vector3();
                 tPropertiesOfSpawn.transform.position -= new Vector3(0, 1, 0);
+                bFalling = false;
             }
         }
 
@@ -330,28 +344,141 @@ public class TetroHolderProperties : MonoBehaviour {
             {
                 bCheckedFrame = 0;
 
+                if (bChangingWall)
+                {
+                    bChangingWall = false;
+                    tPropertiesOfFall.iWall = iWall;
+                    tPropertiesOfFall.iColumn = iColumn;
+                    transform.localRotation = new Quaternion();
+
+                    tPropertiesOfSpawn.vRotation.y += RotatingWall;
+                }
+
                 bMovingRight = false;
                 bMovingLeft = false;
                 bNeedToCheck = false;
-
+                bInitiate = false;
 
                 if (bRotating)
                 {
-                    transform.rotation = new Quaternion();
                     tPropertiesOfSpawn.RotateTetro(90);
+                    transform.localRotation = new Quaternion();
                     bRotating = false;
                 }
 
                 UpdateTetro();
                 UpdatePosition();
+                tPropertiesOfSpawn.ReplaceBorder();
             }
         }
+        else if (!bNeedToCheck && bCheckedFrame > 0)
+            bCheckedFrame = 0;
     }
-
 
     public void UpdateTetro()
     {
         tPropertiesOfSpawn.iColumn = iColumn;
+        tPropertiesOfSpawn.iWall = iWall;
         tPropertiesOfSpawn.UpdatePosition();
+    }
+
+    public void CalculateLeftRight()
+    {
+        CalculateCubes();
+        LeftRight = new Vector3[4];
+
+        LeftRight[0] = vPositionCube;
+        LeftRight[1] = vPositionCube2;
+        LeftRight[2] = vPositionCube3;
+        LeftRight[3] = vPositionCube4;
+
+        BubbleSort(LeftRight, iWall);
+    }
+
+    public void BubbleSort(Vector3[] VectorArray, int iWall)
+    {
+        for (int x = VectorArray.Count() - 1; x > 0; x--)
+        {
+            for (int y = 0; y < x; y++)
+            {
+                if (iWall == 1)
+                {
+
+                    if (VectorArray[y].x > VectorArray[y + 1].x)
+                    {
+                        Vector3 ElementToChange = VectorArray[y];
+                        VectorArray[y] = VectorArray[y + 1];
+                        VectorArray[y + 1] = ElementToChange;
+                    }
+                }
+
+                else if (iWall == 3)
+                {
+
+                    if (VectorArray[y].x < VectorArray[y + 1].x)
+                    {
+                        Vector3 ElementToChange = VectorArray[y];
+                        VectorArray[y] = VectorArray[y + 1];
+                        VectorArray[y + 1] = ElementToChange;
+                    }
+                }
+
+                else if (iWall == 2)
+                {
+                    if (VectorArray[y].z < VectorArray[y + 1].z)
+                    {
+                        Vector3 ElementToChange = VectorArray[y];
+                        VectorArray[y] = VectorArray[y + 1];
+                        VectorArray[y + 1] = ElementToChange;
+                    }
+                }
+
+                else if (iWall == 4)
+                {
+                    if (VectorArray[y].z > VectorArray[y + 1].z)
+                    {
+                        Vector3 ElementToChange = VectorArray[y];
+                        VectorArray[y] = VectorArray[y + 1];
+                        VectorArray[y + 1] = ElementToChange;
+                    }
+                }
+            }
+        }
+    }
+
+    public void Log()
+    {
+        CalculateLeftRight();
+
+        Debug.Log("");
+        Debug.Log(CalculateColumn(LeftRight[0]));
+        Debug.Log(CalculateColumn(LeftRight[1]));
+        Debug.Log(CalculateColumn(LeftRight[2]));
+        Debug.Log(CalculateColumn(LeftRight[3]));
+        Debug.Log("");
+        
+        Debug.Log(LeftRight[0]);
+        Debug.Log(LeftRight[1]);
+        Debug.Log(LeftRight[2]);
+        Debug.Log(LeftRight[3]);
+        Debug.Log("");
+    }
+
+    public float CalculateColumn(Vector3 vPosition)
+    {
+        float vPositionx = Mathf.Round(vPosition.x * 2) / 2;
+        float vPositionz = Mathf.Round(vPosition.z * 2) / 2;
+
+        if (iWall == 1)
+            return (Vector3.Distance(new Vector3(-(SpawnBorder.iMapScale / 2 + 0.5f), 0, 0), new Vector3(vPositionx, 0, 0)));
+
+        else if (iWall == 3)
+            return (Vector3.Distance(new Vector3((SpawnBorder.iMapScale / 2 + 0.5f), 0, 0), new Vector3(vPositionx, 0, 0)));
+
+        else if (iWall == 2)
+            return (Vector3.Distance(new Vector3(0, 0, (SpawnBorder.iMapScale / 2 + 0.5f)), new Vector3(0, 0, vPositionz)));
+
+        else
+            return (Vector3.Distance(new Vector3(0, 0, -(SpawnBorder.iMapScale / 2 + 0.5f)), new Vector3(0, 0, vPositionz)));
     }
 }

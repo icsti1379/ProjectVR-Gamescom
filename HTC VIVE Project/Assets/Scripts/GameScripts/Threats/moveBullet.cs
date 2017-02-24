@@ -67,6 +67,7 @@ public class moveBullet : MonoBehaviour
             //explo = GetComponent<ParticleSystem>();
             //explo.Play();
             Instantiate(explosionPrefab, centerObject.transform);
+
             Destroy(gameObject);
         }
     }

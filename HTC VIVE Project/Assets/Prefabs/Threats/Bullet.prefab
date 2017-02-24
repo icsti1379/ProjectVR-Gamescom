@@ -58,7 +58,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 963da7e130186b340a7f281088ffd1f1, type: 2}
+  - {fileID: 2100000, guid: 3c560b1c5b4a7c048ba5f9b87a27ffd7, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -178,13 +178,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000011882306454}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79c4132694c249b43a6cd0b4c3b77f7b, type: 3}
+  m_Script: {fileID: 11500000, guid: a7141b7d37308e64a9ab376c7f247e41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  step: 0.61
-  primaryTargetTag: damagedTetromino
-  secondaryTargetTag: Tetromino
-  explosionPrefab: {fileID: 1000011666373716, guid: 33f459f493963c14286218dde521241c,
+  step: 0.75
+  primaryTargetTag: DamagedCube
+  secondaryTargetTag: Cube
+  explosionPrefab: {fileID: 1000011666373716, guid: df31bf26236f71548bb413bc6cf50079,
     type: 2}
 --- !u!135 &135000014211896522
 SphereCollider:

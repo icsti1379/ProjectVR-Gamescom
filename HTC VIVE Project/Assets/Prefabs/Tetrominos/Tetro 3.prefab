@@ -61,10 +61,10 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: f6724340aac6ba9408794d0789b41020, type: 2}
-  - {fileID: 2100000, guid: f6724340aac6ba9408794d0789b41020, type: 2}
-  - {fileID: 2100000, guid: f6724340aac6ba9408794d0789b41020, type: 2}
-  - {fileID: 2100000, guid: f6724340aac6ba9408794d0789b41020, type: 2}
+  - {fileID: 2100000, guid: f6d04c55319763d41af7d0e0ff14149e, type: 2}
+  - {fileID: 2100000, guid: f6d04c55319763d41af7d0e0ff14149e, type: 2}
+  - {fileID: 2100000, guid: f6d04c55319763d41af7d0e0ff14149e, type: 2}
+  - {fileID: 2100000, guid: f6d04c55319763d41af7d0e0ff14149e, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -112,8 +112,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.9, y: 1.9, z: 7.9}
-  m_Center: {x: 0, y: 0, z: -3}
+  m_Size: {x: 7.9, y: 1.9, z: 1.9}
+  m_Center: {x: -1, y: 0, z: 0}
 --- !u!95 &95000014096790104
 Animator:
   serializedVersion: 3
@@ -166,15 +166,9 @@ MonoBehaviour:
   vPositionCube2: {x: 0, y: 0, z: 0}
   vPositionCube3: {x: 0, y: 0, z: 0}
   vPositionCube4: {x: 0, y: 0, z: 0}
-  iRow1: 0
-  iRow2: 0
-  iRow3: 0
-  iRow4: 0
-  iColumn1: 0
-  iColumn2: 0
-  iColumn3: 0
-  iColumn4: 0
+  iLastMovement: 0
   vRotation: {x: 0, y: 0, z: 0}
+  LeftRight: []
 --- !u!114 &114000013691010908
 MonoBehaviour:
   m_ObjectHideFlags: 1

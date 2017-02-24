@@ -106,7 +106,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9, y: 0.9, z: 0.9}
+  m_Size: {x: 0.9, y: 0.95, z: 0.9}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114000012228385400
 MonoBehaviour:
@@ -139,6 +139,11 @@ MonoBehaviour:
   bJustFell: 0
   bGroupSplitted: 0
   bWillFall: 0
+  pos: 0
+  bInList: 0
+  bOnFallList: 0
+  bFallingFinished: 0
+  iLastMovement: 0
 --- !u!114 &114000012661916744
 MonoBehaviour:
   m_ObjectHideFlags: 1

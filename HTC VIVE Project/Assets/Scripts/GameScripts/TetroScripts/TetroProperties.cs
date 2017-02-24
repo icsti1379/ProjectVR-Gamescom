@@ -22,17 +22,11 @@ public class TetroProperties : MonoBehaviour {
     public Vector3 vPositionCube3;
     public Vector3 vPositionCube4;
 
-    public int iRow1;
-    public int iRow2;
-    public int iRow3;
-    public int iRow4;
-
-    public int iColumn1;
-    public int iColumn2;
-    public int iColumn3;
-    public int iColumn4;
+    public int iLastMovement;
 
     public Vector3 vRotation;
+
+    public Vector3[] LeftRight;
 
     /// <summary>
     /// Updates the Position of the Tetromino (Useful when Column or Wall needs to be changed)
@@ -82,40 +76,11 @@ public class TetroProperties : MonoBehaviour {
         if (iType == 7)
             return;
 
-        if (iType > 3)
-        {
-            transform.Rotate(new Vector3(0, 0, iAngle));
-            vRotation += new Vector3(0, 0, iAngle);
-            if (vRotation.z >= 360)
-                vRotation.z -= 360;
-        }
+        transform.Rotate(new Vector3(0, 0, iAngle));
+        vRotation += new Vector3(0, 0, iAngle);
+        if (vRotation.z >= 360)
+            vRotation.z -= 360;
 
-        else if (iType != 3)
-        {
-            if (vRotation.z >= 90)
-            {
-                vRotation -= new Vector3(0, 0, iAngle);
-                transform.Rotate(new Vector3(0, 0, -iAngle));
-            }
-            else
-            {
-                vRotation += new Vector3(0, 0, iAngle);
-                transform.Rotate(new Vector3(0, 0, iAngle));
-            }
-        }
-        else
-        {
-            if (vRotation.x >= 90)
-            {
-                vRotation -= new Vector3(iAngle, 0, 0);
-                transform.Rotate(new Vector3(-iAngle, 0, 0));
-            }
-            else
-            {
-                vRotation += new Vector3(iAngle, 0, 0);
-                transform.Rotate(new Vector3(iAngle, 0, 0));
-            }
-        }
     }
 
     /// <summary>
@@ -130,50 +95,50 @@ public class TetroProperties : MonoBehaviour {
 
         if (iType == 1)
         {
-            v1 = new Vector3(0, 1);
-            v2 = new Vector3(-1, 1);
-            v3 = new Vector3(-1, 2);
+            v1 = new Vector3(0, -1);
+            v2 = new Vector3(-1, 0);
+            v3 = new Vector3(-1, 1);
         }
 
         else if (iType == 2)
         {
-            v1 = new Vector3(-1, -1);
-            v2 = new Vector3(0, -1);
-            v3 = new Vector3(-1, -2);
+            v1 = new Vector3(0, 1);
+            v2 = new Vector3(-1, 0);
+            v3 = new Vector3(-1, -1);
         }
 
         else if (iType == 3)
         {
-            v1 = new Vector3(0, 0, -1);
-            v2 = new Vector3(0, 0, -2);
-            v3 = new Vector3(0, 0, -3);
+            v1 = new Vector3(1, 0);
+            v2 = new Vector3(-1, 0);
+            v3 = new Vector3(-2, 0);
         }
 
         else if (iType == 4)
         {
             v1 = new Vector3(-1, 0);
-            v2 = new Vector3(-2, 0);
-            v3 = new Vector3(-1, 1);
+            v2 = new Vector3(1, 0);
+            v3 = new Vector3(0, 1);
         }
 
         else if (iType == 5)
         {
-            v1 = new Vector3(0, -1);
-            v2 = new Vector3(0, -2);
-            v3 = new Vector3(-1, -2);
+            v1 = new Vector3(0, 1);
+            v2 = new Vector3(0, -1);
+            v3 = new Vector3(-1, -1);
         }
 
         else if (iType == 6)
         {
-            v1 = new Vector3(1, -1);
-            v2 = new Vector3(1, -2);
-            v3 = new Vector3(1, 0);
+            v1 = new Vector3(0, 1);
+            v2 = new Vector3(-1, 1);
+            v3 = new Vector3(0, -1);
         }
         else if (iType == 7)
         {
-            v1 = new Vector3(0, 0, -1);
-            v2 = new Vector3(0, -1, 0);
-            v3 = new Vector3(0, -1, -1);
+            v1 = new Vector3(-1, 0);
+            v2 = new Vector3(0, -1);
+            v3 = new Vector3(-1, -1);
         }
         else
         {
@@ -198,5 +163,78 @@ public class TetroProperties : MonoBehaviour {
         vPositionCube2 = vPositionCube + vPos2;
         vPositionCube3 = vPositionCube + vPos3;
         vPositionCube4 = vPositionCube + vPos4;
+    }
+
+    public Vector3[] CalculateLeftRight()
+    {
+        CalculateCubes();
+        Vector3[] VectorArray = new Vector3[4];
+
+        VectorArray[0] = vPositionCube;
+        VectorArray[1] = vPositionCube2;
+        VectorArray[2] = vPositionCube3;
+        VectorArray[3] = vPositionCube4;
+
+        if (iWall == 1 || iWall == 3)
+            BubbleSort(VectorArray, 'x');
+
+        else if (iWall == 2 || iWall == 4)
+            BubbleSort(VectorArray, 'z');
+
+        return VectorArray;
+    }
+
+    public void BubbleSort(Vector3[] VectorArray, char iWallCoord)
+    {
+        for (int x = VectorArray.Count() - 1; x > 0; x--)
+        {
+            for (int y = 0; y < x; y++)
+            {
+                switch (iWallCoord)
+                {
+                    case 'x':
+                        if (VectorArray[y].x > VectorArray[y + 1].x)
+                        {
+                            Vector3 ElementToChange = VectorArray[y];
+                            VectorArray[y] = VectorArray[y + 1];
+                            VectorArray[y + 1] = ElementToChange;
+                        }
+                        break;
+
+                    case 'z':
+                        if (VectorArray[y].z > VectorArray[y + 1].z)
+                        {
+                            Vector3 ElementToChange = VectorArray[y];
+                            VectorArray[y] = VectorArray[y + 1];
+                            VectorArray[y + 1] = ElementToChange;
+                        }
+                        break;
+                }
+            }
+        }
+    }
+
+    public void ReplaceBorder()
+    {
+        LeftRight = CalculateLeftRight();
+
+        if (iWall == 1 || iWall == 3)
+        {
+            SpawnTetromino.gBorderPlacement11.transform.position = new Vector3(LeftRight[0].x - 0.5f, SpawnTetromino.iSpawnPosY / 2, LeftRight[0].z + 0.5f);
+            SpawnTetromino.gBorderPlacement22.transform.position = new Vector3(LeftRight[0].x - 0.5f, SpawnTetromino.iSpawnPosY / 2, LeftRight[0].z - 0.5f);
+            SpawnTetromino.gBorderPlacement33.transform.position = new Vector3(LeftRight[3].x + 0.5f, SpawnTetromino.iSpawnPosY / 2, LeftRight[3].z + 0.5f);
+            SpawnTetromino.gBorderPlacement44.transform.position = new Vector3(LeftRight[3].x + 0.5f, SpawnTetromino.iSpawnPosY / 2, LeftRight[3].z - 0.5f);
+        }
+        else
+        {
+            SpawnTetromino.gBorderPlacement11.transform.position = new Vector3(LeftRight[0].x + 0.5f, SpawnTetromino.iSpawnPosY / 2, LeftRight[0].z - 0.5f);
+            SpawnTetromino.gBorderPlacement22.transform.position = new Vector3(LeftRight[0].x - 0.5f, SpawnTetromino.iSpawnPosY / 2, LeftRight[0].z - 0.5f);
+            SpawnTetromino.gBorderPlacement33.transform.position = new Vector3(LeftRight[0].x + 0.5f, SpawnTetromino.iSpawnPosY / 2, LeftRight[3].z + 0.5f);
+            SpawnTetromino.gBorderPlacement44.transform.position = new Vector3(LeftRight[0].x - 0.5f, SpawnTetromino.iSpawnPosY / 2, LeftRight[3].z + 0.5f);
+        }
+        SpawnTetromino.gBorderPlacement11.transform.localScale = new Vector3(0.05f, SpawnTetromino.iSpawnPosY, 0.05f);
+        SpawnTetromino.gBorderPlacement22.transform.localScale = new Vector3(0.05f, SpawnTetromino.iSpawnPosY, 0.05f);
+        SpawnTetromino.gBorderPlacement33.transform.localScale = new Vector3(0.05f, SpawnTetromino.iSpawnPosY, 0.05f);
+        SpawnTetromino.gBorderPlacement44.transform.localScale = new Vector3(0.05f, SpawnTetromino.iSpawnPosY, 0.05f);
     }
 }

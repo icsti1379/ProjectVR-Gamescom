@@ -13,7 +13,6 @@ public class shootCannon : MonoBehaviour {
     private GameObject newInstance;
 
 
-
     // Use this for initialization
     void Start()
     {

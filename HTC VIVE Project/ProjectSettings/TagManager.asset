@@ -11,6 +11,7 @@ TagManager:
   - Placeholder
   - Bullet
   - BorderPlacement
+  - DamagedCube
   layers:
   - Default
   - TransparentFX

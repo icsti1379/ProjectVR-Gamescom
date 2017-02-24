@@ -4,13 +4,18 @@ using System.Collections;
 public class TetroFall : MonoBehaviour
 {
     private TetroProperties tProperties;
+    private TetroHolderProperties tFallingProperties;
+    private TetroHolderProperties tMovingProperties;
+
+
     public static float fSpeed;
     public static float fTime;
-    bool bFalling = false;
 
     private void Start()
     {
         tProperties = GetComponent<TetroProperties>();
+        tFallingProperties = tProperties.gPFalling.GetComponent<TetroHolderProperties>();
+        tMovingProperties = tProperties.gPMoving.GetComponent<TetroHolderProperties>();
     }
 
     /// <summary>
@@ -18,14 +23,16 @@ public class TetroFall : MonoBehaviour
     /// </summary>
     void Update()
     {
-        fTime += Time.deltaTime;
-
-        if (fTime > fSpeed)
+        if (tFallingProperties != null && !tFallingProperties.bFalling)
         {
-            tProperties.gPFalling.LookToFall();
-            fTime = 0;
-        }
+            fTime += Time.deltaTime;
 
+            if (fTime > fSpeed && !tMovingProperties.bNeedToCheck)
+            {
+                tProperties.gPFalling.LookToFall();
+                fTime = 0;
+            }
+        }
     }
 }
 

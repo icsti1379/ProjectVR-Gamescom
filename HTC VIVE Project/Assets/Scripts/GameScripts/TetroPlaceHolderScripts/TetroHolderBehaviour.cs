@@ -10,14 +10,15 @@ public class TetroHolderBehaviour : MonoBehaviour {
     {
         tProperties = GetComponent<TetroHolderProperties>();
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.CompareTag("Placeholder"))
+        if (!other.gameObject.CompareTag("Tetromino"))
         {
             if (tProperties.bFalling)
             {
                 tProperties.transform.localPosition = new Vector3();
-                tProperties.tPropertiesOfSpawn.transform.position -= new Vector3(0, 0.15f, 0);
+                tProperties.tPropertiesOfSpawn.transform.position -= new Vector3(0, 0.25f, 0);
                 tProperties.bFalling = false;
             }
 
@@ -25,62 +26,63 @@ public class TetroHolderBehaviour : MonoBehaviour {
             {
                 if (tProperties.bMovingLeft)
                 {
-                    tProperties.iColumn++;
+                    tProperties.transform.localPosition = new Vector3();
+                    tProperties.transform.localRotation = new Quaternion();
+
                     tProperties.bMovingLeft = false;
+                    tProperties.SynchroniseWithTetro();
+                    tProperties.bChangingWall = false;
                 }
 
                 if (tProperties.bMovingRight)
                 {
-                    tProperties.iColumn--;
+                    tProperties.transform.localPosition = new Vector3();
+                    tProperties.transform.localRotation = new Quaternion();
+
                     tProperties.bMovingRight = false;
+                    tProperties.SynchroniseWithTetro();
+                    tProperties.bChangingWall = false;
                 }
+
 
                 if (tProperties.bRotating)
                 {
-                    tProperties.transform.rotation = new Quaternion();
+                    tProperties.transform.localRotation = new Quaternion();
                     tProperties.bRotating = false;
-                    tProperties.transform.position = new Vector3();
                 }
 
                 tProperties.bNeedToCheck = false;
                 tProperties.bCheckedFrame = 0;
                 tProperties.UpdatePosition();
             }
-            else if (other.gameObject.CompareTag("Border"))
+            
+            else if (other.gameObject.CompareTag("Border") && tProperties.bInitiate)
             {
+                Debug.Log("Corrected");
                 bIncorrectSpawn = true;
+                tProperties.bInitiate = false;
+                tProperties.CalculateLeftRight();
 
-                if (tProperties.iColumn < 5)
+                while (tProperties.CalculateColumn(tProperties.LeftRight[0]) < 2)
+                {
                     tProperties.iColumn++;
+                    tProperties.UpdateTetro();
+                    tProperties.tPropertiesOfSpawn.UpdatePosition();
+                    tProperties.UpdatePosition();
+                    tProperties.CalculateLeftRight();
+                }
 
-                else if (tProperties.iColumn > 5)
+                while (tProperties.CalculateColumn(tProperties.LeftRight[3]) > 9)
+                {
                     tProperties.iColumn--;
-
-                tProperties.UpdateTetro();
-                tProperties.UpdatePosition();
+                    tProperties.UpdateTetro();
+                    tProperties.tPropertiesOfSpawn.UpdatePosition();
+                    tProperties.UpdatePosition();
+                    tProperties.CalculateLeftRight();
+                }
+                
+                tProperties.tPropertiesOfSpawn.GetComponent<TetroProperties>().ReplaceBorder();
             }
-
         }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if(bIncorrectSpawn)
-        {
-            if (tProperties.iColumn < 5)
-                tProperties.iColumn++;
-
-            else if (tProperties.iColumn > 5)
-                tProperties.iColumn--;
-
-            tProperties.UpdateTetro();
-            tProperties.UpdatePosition();
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (bIncorrectSpawn)
-            bIncorrectSpawn = false;
     }
 }

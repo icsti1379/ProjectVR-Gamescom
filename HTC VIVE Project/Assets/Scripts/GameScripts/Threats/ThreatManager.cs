@@ -54,9 +54,10 @@ public class ThreatManager : MonoBehaviour
         busterShotTimer += Time.deltaTime;
 
         if (busterShotTimer % busterShotFrequency <= 2)
-        {
             projectile = busterBullet;
-        }
+
+
+        shootCounter = Random.Range(1, 5);
 
 	    if (timer > spawnTimer)
         {
@@ -65,25 +66,21 @@ public class ThreatManager : MonoBehaviour
                 case 1:
                     activeCannon = firstCannon.GetComponent<shootCannon>();
                     activeCannon.SpawnBullet(projectile);
-                    shootCounter++;
                     timer = 0;
                     break;
                 case 2:
                     activeCannon = secondCannon.GetComponent<shootCannon>();
                     activeCannon.SpawnBullet(projectile);
-                    shootCounter++;
                     timer = 0;
                     break;
                 case 3:
                     activeCannon = thirdCannon.GetComponent<shootCannon>();
                     activeCannon.SpawnBullet(projectile);
-                    shootCounter++;
                     timer = 0;
                     break;
                 case 4:
                     activeCannon = fourthCannon.GetComponent<shootCannon>();
                     activeCannon.SpawnBullet(projectile);
-                    shootCounter = 1;
                     timer = 0;
                     break;
             }

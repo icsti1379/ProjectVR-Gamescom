@@ -81,7 +81,7 @@ Material:
       second: 0.3897143
     - first:
         name: _GerstnerIntensity
-      second: 0.69
+      second: 1
     - first:
         name: _HeightDisplacement
       second: 2.3370318
@@ -103,10 +103,10 @@ Material:
       second: {r: 0.17275561, g: 0.224076, b: 0.24626863, a: 0.5058824}
     - first:
         name: _BumpDirection
-      second: {r: 0, g: 0, b: 0, a: 0}
+      second: {r: 1, g: 30, b: 20, a: -20}
     - first:
         name: _BumpTiling
-      second: {r: 0, g: 0, b: 0, a: 0}
+      second: {r: 0.04, g: 0.04, b: 0.04, a: 0.08}
     - first:
         name: _Color
       second: {r: 1, g: 1, b: 1, a: 1}
@@ -115,7 +115,7 @@ Material:
       second: {r: 0.29811764, g: 0.36611718, b: 0.39552242, a: 0.34509805}
     - first:
         name: _DistortParams
-      second: {r: 1.03, g: 0.20187221, b: 2.766625, a: -0.41714284}
+      second: {r: 1.0285715, g: 0.20187221, b: 2.766625, a: -0.41714284}
     - first:
         name: _Foam
       second: {r: 0.3275862, g: 0.7471264, b: 0, a: 0}

@@ -9,30 +9,29 @@ public class TetroDismount : MonoBehaviour {
     public static List<List<GameObject>> CubeCollection3;
     public static List<List<GameObject>> CubeCollection4;
 
-    public static List<List<GameObject>> FamiliarCubes;
-
-    public static int iCompleted = 1;
-
-    public static float fTime = 0.3f;
-
-    int iRepeating = 0;
+    public static List<List<GameObject>> lCubesToFall;
 
     public static int LowestRowToMove;
     public static int HighestRowToMove;
 
-    public static bool bMovingFamiliar = false;
+    public static bool bDismountInProcess = false;
+
     public static bool bInitiated = false;
 
     static int iWallToCheck;
 
+    static bool bInitialiseFalling = false;
 
-    public void Start()
+    public static int LowestFallPos = SpawnBorder.iSpawnPosY;
+
+
+    private void Start()
     {
         CubeCollection1 = new List<List<GameObject>>();
         CubeCollection2 = new List<List<GameObject>>();
         CubeCollection3 = new List<List<GameObject>>();
         CubeCollection4 = new List<List<GameObject>>();
-        FamiliarCubes = new List<List<GameObject>>();
+        lCubesToFall = new List<List<GameObject>>();
 
         for (int x = 1; x < SpawnBorder.iSpawnPosY - 2; x++)
         {
@@ -40,11 +39,11 @@ public class TetroDismount : MonoBehaviour {
             CubeCollection2.Add(new List<GameObject>());
             CubeCollection3.Add(new List<GameObject>());
             CubeCollection4.Add(new List<GameObject>());
-            FamiliarCubes.Add(new List<GameObject>());
+            lCubesToFall.Add(new List<GameObject>());
         }
     }
 
-    public static void LeftRight(CubeProperties Cproperties, CubeProperties Cproperties1)
+    private static void LeftRight(CubeProperties Cproperties, CubeProperties Cproperties1)
     {
         try
         {
@@ -54,8 +53,14 @@ public class TetroDismount : MonoBehaviour {
             {
                 CubeProperties CpropertiesRight = vCubeRight.GetComponent<CubeProperties>();
 
-                if (CpropertiesRight.iCubeID == Cproperties1.iCubeID)
-                    FamiliarCubes[CpropertiesRight.iRow - 1].Add(vCubeRight);
+                if (!lCubesToFall[CpropertiesRight.iRow - 1].Exists(obj => obj == vCubeRight) && NeedToFall(CpropertiesRight, false))
+                {
+                    lCubesToFall[CpropertiesRight.iRow - 1].Add(vCubeRight);
+                    CpropertiesRight.bOnFallList = true;
+                }
+
+                Above(CpropertiesRight);
+                Beneath(CpropertiesRight);
 
                 try { vCubeRight = CpropertiesRight.gCubeRight_Group; }
                 catch { break; }
@@ -71,8 +76,14 @@ public class TetroDismount : MonoBehaviour {
             {
                 CubeProperties CpropertiesLeft = vCubeLeft.GetComponent<CubeProperties>();
 
-                if (CpropertiesLeft.iCubeID == Cproperties1.iCubeID)
-                    FamiliarCubes[CpropertiesLeft.iRow - 1].Add(vCubeLeft);
+                if (!lCubesToFall[CpropertiesLeft.iRow - 1].Exists(obj => obj == vCubeLeft) && NeedToFall(CpropertiesLeft, false))
+                {
+                    lCubesToFall[CpropertiesLeft.iRow - 1].Add(vCubeLeft);
+                    CpropertiesLeft.bOnFallList = true;
+                }
+
+                Above(CpropertiesLeft);
+                Beneath(CpropertiesLeft);
 
                 try { vCubeLeft = CpropertiesLeft.gCubeLeft_Group; }
                 catch { break; }
@@ -81,10 +92,67 @@ public class TetroDismount : MonoBehaviour {
         catch { }
     }
 
-
-    public static void Dismount(int iRow, int iWall)
+    private static void Above(CubeProperties cCubeAbove)
     {
-        List<int> lIndexToRemove = new List<int>();
+        try
+        {
+            GameObject vCubeAbove = cCubeAbove.gCubeAbove;
+            CubeProperties Cproperties1 = vCubeAbove.GetComponent<CubeProperties>();
+
+            for (int y = 1; y < SpawnBorder.iSpawnPosY; y++)
+            {
+                CubeProperties Cproperties = vCubeAbove.GetComponent<CubeProperties>();
+
+                if (HighestRowToMove < Cproperties.iRow)
+                    HighestRowToMove = Cproperties.iRow;
+
+                if (!lCubesToFall[Cproperties.iRow - 1].Exists(obj => obj == vCubeAbove) && NeedToFall(Cproperties, true))
+                {
+                    lCubesToFall[Cproperties.iRow - 1].Add(vCubeAbove);
+                    Cproperties.bOnFallList = true;
+                }
+
+                LeftRight(Cproperties, Cproperties1);
+
+                try { vCubeAbove = Cproperties.gCubeAbove; }
+                catch { break; }
+            }
+        }
+        catch { }
+    }
+
+
+    private static void Beneath(CubeProperties cCubeBeneath)
+    {
+        try
+        {
+            GameObject vCubeBeneath = cCubeBeneath.gCubeBeneath;
+            CubeProperties Cproperties1 = vCubeBeneath.GetComponent<CubeProperties>();
+
+            for (int y = 1; y < vCubeBeneath.GetComponent<CubeProperties>().iRow; y++)
+            {
+                CubeProperties Cproperties = vCubeBeneath.GetComponent<CubeProperties>();
+
+                if (LowestRowToMove > Cproperties.iRow)
+                    LowestRowToMove = Cproperties.iRow;
+
+                if (!lCubesToFall[Cproperties.iRow - 1].Exists(obj => obj == vCubeBeneath) && NeedToFall(Cproperties, false))
+                {
+                    lCubesToFall[Cproperties.iRow - 1].Add(vCubeBeneath);
+                    Cproperties.bOnFallList = true;
+                }
+
+                try { vCubeBeneath = Cproperties.gCubeBeneath; }
+                catch { break; }
+            }
+        }
+        catch { }
+    }
+
+
+    private static void AddToFallingList(int iRow, int iWall)
+    {
+        GameObject gObjectInRow;
 
         LowestRowToMove = iRow;
         HighestRowToMove = iRow;
@@ -93,104 +161,103 @@ public class TetroDismount : MonoBehaviour {
 
         for (int x = 0; x < lListOfWall(iWall)[iRow - 1].Count; x++)
         {
-            GameObject gObjectInRow = lListOfWall(iWall)[iRow - 1][x];
+            gObjectInRow = lListOfWall(iWall)[iRow - 1][x];
             CubeProperties cObjectInRow = gObjectInRow.GetComponent<CubeProperties>();
 
-            FamiliarCubes[iRow - 1].Add(gObjectInRow);
+            if(cObjectInRow.gCube1 != null)
+                cObjectInRow.gCube1.GetComponent<CubeProperties>().bGroupSplitted = true;
 
-            try
+            if (cObjectInRow.gCube2 != null)
+                cObjectInRow.gCube2.GetComponent<CubeProperties>().bGroupSplitted = true;
+
+            if (cObjectInRow.gCube3 != null)
+                cObjectInRow.gCube3.GetComponent<CubeProperties>().bGroupSplitted = true;
+
+            if (cObjectInRow.gCube4 != null)
+                cObjectInRow.gCube4.GetComponent<CubeProperties>().bGroupSplitted = true;
+
+            if (!NeedToFall(cObjectInRow, true))
+                continue;
+
+            if (!lCubesToFall[cObjectInRow.iRow - 1].Exists(obj => obj == gObjectInRow))
             {
-                GameObject vCubeBeneath = lListOfWall(iWall)[iRow - 1][x].GetComponent<CubeProperties>().gCubeBeneath;
-
-                for (int y = 1; y < vCubeBeneath.GetComponent<CubeProperties>().iRow; y++)
-                {
-                    CubeProperties Cproperties = vCubeBeneath.GetComponent<CubeProperties>();
-
-                    if (LowestRowToMove > Cproperties.iRow)
-                        LowestRowToMove = Cproperties.iRow;
-
-                    if (HighestRowToMove < Cproperties.iRow)
-                        HighestRowToMove = Cproperties.iRow;
-
-                    FamiliarCubes[Cproperties.iRow - 1].Add(vCubeBeneath);
-
-                    //LeftRight(iWall, iRow, x);
-
-                    try { vCubeBeneath = Cproperties.gCubeBeneath; }
-                    catch { break; }
-                }
+                lCubesToFall[iRow - 1].Add(gObjectInRow);
+                cObjectInRow.bOnFallList = true;
             }
-            catch { }
 
-            try
-            {
-                GameObject vCubeAbove = lListOfWall(iWall)[iRow - 1][x].GetComponent<CubeProperties>().gCubeAbove;
-                CubeProperties Cproperties1 = vCubeAbove.GetComponent<CubeProperties>();
+            Beneath(lListOfWall(iWall)[iRow - 1][x].GetComponent<CubeProperties>());
+            Above(lListOfWall(iWall)[iRow - 1][x].GetComponent<CubeProperties>());
 
-                for (int y = 1; y < SpawnBorder.iSpawnPosY; y++)
-                {
-                    CubeProperties Cproperties = vCubeAbove.GetComponent<CubeProperties>();
+            bDismountInProcess = true;
 
-                    if (LowestRowToMove > Cproperties.iRow)
-                        LowestRowToMove = Cproperties.iRow;
-
-                    if (HighestRowToMove < Cproperties.iRow)
-                        HighestRowToMove = Cproperties.iRow;
-
-                    FamiliarCubes[Cproperties.iRow - 1].Add(vCubeAbove);
-
-                    LeftRight(Cproperties, Cproperties1);
-
-                    try { vCubeAbove = Cproperties.gCubeAbove; }
-                    catch { break; }
-                }
-            }
-            catch { }
-
-            bMovingFamiliar = true;
-
-            lIndexToRemove.Add(x);
+            for (int q = 0; q < lCubesToFall[iRow - 1].Count; q++)
+                lCubesToFall[iRow - 1][q].GetComponent<CubeProperties>().bGroupSplitted = true;
         }
     }
 
     public void Update()
     {
-        if (bMovingFamiliar)
+        if (bDismountInProcess)
         {
-            fTime += Time.deltaTime;
-            if (!bInitiated)
+            if (!bInitialiseFalling)
             {
-                iRepeating = LowestRowToMove - 1;
-                bInitiated = true;
+                for (int x = LowestRowToMove - 1; x < lCubesToFall.Count; x++)
+                {
+                    for (int y = 0; y < lCubesToFall[x].Count; y++)
+                    {
+                        lCubesToFall[x][y].GetComponent<CubeProperties>().bIsFalling = true;
+                    }
+                }
+                bInitialiseFalling = true;
             }
-        }
 
-        if (fTime > 0.3f)
-            MoveFamiliar();
-    }
+            ApplyFallingList();
 
-    public void MoveFamiliar()
-    {
-        for (int y = 0; y < FamiliarCubes[iRepeating].Count; y++)
-            FamiliarCubes[iRepeating][y].GetComponent<CubeProperties>().Fall();
+            for (int x = LowestRowToMove - 1; x < lCubesToFall.Count; x++)
+            {
+                for (int y = 0; y < lCubesToFall[x].Count; y++)
+                {
+                    if (!lCubesToFall[x][y].GetComponent<CubeProperties>().bFallingFinished)
+                        return;
+                }             
+            }
 
-        iRepeating++;
-        fTime = 0;
+            bDismountInProcess = false;
+            bInitialiseFalling = false;
 
-        if (iRepeating > HighestRowToMove)
-        {
-            FamiliarCubes = new List<List<GameObject>>();
-            fTime = 0.3f;
-            bInitiated = false;
-            bMovingFamiliar = false;
+            for (int x = LowestRowToMove - 1; x < lCubesToFall.Count; x++)
+            {
+                for (int y = 0; y < lCubesToFall[x].Count; y++)
+                {
+                    CubeProperties cProperties = lCubesToFall[x][y].GetComponent<CubeProperties>();
+                    cProperties.bJustFell = false;
+                    cProperties.bOnFallList = false;
+                    cProperties.SearchVertical();
+                    cProperties.SearchHorizontal();
+                }
+            }
+
+            lCubesToFall = new List<List<GameObject>>();
 
             for (int z = 1; z < SpawnBorder.iSpawnPosY - 2; z++)
-                FamiliarCubes.Add(new List<GameObject>());
+                lCubesToFall.Add(new List<GameObject>());
 
-            for (int c = 1; c < HighestRowToMove; c++)
+            for (int c = LowestFallPos - 1; c < HighestRowToMove; c++)
             {
                 if (CheckRowComplete(c, iWallToCheck))
                     break;
+            }
+        }
+    }
+
+    private void ApplyFallingList()
+    {
+        for (int x = LowestRowToMove - 1; x < lCubesToFall.Count; x++)
+        {
+            for (int y = 0; y < lCubesToFall[x].Count; y++)
+            {
+                if (!lCubesToFall[x][y].GetComponent<CubeProperties>().bJustFell)
+                    lCubesToFall[x][y].GetComponent<CubeProperties>().Fall();
             }
         }
     }
@@ -214,7 +281,7 @@ public class TetroDismount : MonoBehaviour {
 
                 if (bDismount)
                 {
-                    Dismount(iRow, iWall);
+                    AddToFallingList(iRow, iWall);
                     return true;
                 }
             }
@@ -237,5 +304,38 @@ public class TetroDismount : MonoBehaviour {
             return CubeCollection4;
 
         return null;
+    }
+
+    public static bool NeedToFall(CubeProperties tCube, bool bSides)
+    {
+        bool bLoop = true;
+
+        try
+        {
+            GameObject gBeneathLoop = tCube.gCubeBeneath;
+
+            while (bLoop && gBeneathLoop.GetComponent<CubeProperties>().iRow > 1)
+            {
+                try
+                {
+                    if (bSides)
+                    {
+                        if (!gBeneathLoop.GetComponent<CubeProperties>().bOnFallList && gBeneathLoop != tCube.gCube1 && gBeneathLoop != tCube.gCube2 && gBeneathLoop != tCube.gCube3 && gBeneathLoop != tCube.gCube4)
+                            return false;
+                    }
+
+                    gBeneathLoop = gBeneathLoop.GetComponent<CubeProperties>().gCubeBeneath;
+                }
+                catch
+                {
+                    return true;
+                }
+            }
+        }
+        catch
+        {
+            return true;
+        }
+        return false;
     }
 }

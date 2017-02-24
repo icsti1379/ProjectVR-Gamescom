@@ -7,18 +7,6 @@
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
-
-/Libary/
-/libary/
-/Temp/
-/temp/
-/Obj/
-/obj/
-/Build/
-/build/
-/Builds/
-/builds/
-
 /Assets/AssetStoreTools*
 *.stackdump
 *.pidb.meta
@@ -70,22 +58,12 @@ sysinfo.txt
 ehthumbs.db
 [Tt]humbs.db
 [Dd]esktop.ini
-
 *.bakert
-HTC VIVE Project/Temp/Unity*
 HTC VIVE Project/Temp/UnityLockfile
 HTC VIVE Project/Temp/UnityTempFile-8f96b4f1f363218459107567bc6b173f
 HTC VIVE Project/Temp/UnityTempFile-9d68fa1452c8c0b46a052b19c8b65570
 HTC VIVE Project/Temp/UnityTempFile-1a136d361cda1314db520c9256f9bcd0
 HTC VIVE Project/Temp/UnityTempFile-27f2eb0f7327e8845a9f423ae8a8c621
 HTC VIVE Project/Temp/UnityTempFile-e2411acdafd125f429eefc9eb1e2eda4
-*.backup
-HTC VIVE Project/Library/shadercompiler-UnityShaderCompiler.exe0.log
-HTC VIVE Project/Library/metadata/0e/0e9c0a040d7962c4c957235d42ffff3d
-*.info
-HTC VIVE Project/Library/metadata/3b/3b8fe4064f12fae4e8fdacdb2d44b08e
-HTC VIVE Project/Library/metadata/79/79d8fc82166eb214281f260c98439063
-HTC VIVE Project/Library/metadata/41/416ef9ce15463894f951a8c785eee427
-HTC VIVE Project/Library/metadata/7b/7bfa972ad2954834e87ddd806ce81cff
-HTC VIVE Project/Library/metadata/7d/7d84b2e5747b1f94691fedf5f1047ffc
-HTC VIVE Project/Library/metadata/a4/a45f84ffc35c9294ba786069248ce5da
+HTC VIVE Project/Library/metadata/2b/2bb14e42b0cb50b47892ef489d4063ab
+HTC VIVE Project/Library/metadata/2b/2bb14e42b0cb50b47892ef489d4063ab

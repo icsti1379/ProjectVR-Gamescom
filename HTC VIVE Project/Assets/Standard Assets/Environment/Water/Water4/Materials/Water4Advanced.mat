@@ -247,7 +247,7 @@ Material:
       second: {r: 4.5, g: 75, b: 300, a: 1}
     - first:
         name: _Foam
-      second: {r: 0.268, g: 0.282, b: 0, a: 0}
+      second: {r: 0.42666668, g: 0.48666668, b: 0, a: 0}
     - first:
         name: _FoamWaveParams
       second: {r: 0, g: 0.24918434, b: 3.3395782, a: 1}
@@ -256,7 +256,7 @@ Material:
       second: {r: 1, g: 1, b: 0, a: 0}
     - first:
         name: _GAmplitude
-      second: {r: 0, g: 0, b: 0, a: 0.15}
+      second: {r: 0.14, g: 0.76, b: 0.175, a: 0.225}
     - first:
         name: _GDirectionAB
       second: {r: 0.46914357, g: 0.35405126, b: -0.2, a: 0.1}
@@ -265,7 +265,7 @@ Material:
       second: {r: 0.7033888, g: -0.6799999, b: 0.7175735, a: -0.2}
     - first:
         name: _GFrequency
-      second: {r: 0.5, g: 0.5, b: 0.59, a: 0.75}
+      second: {r: 0.5, g: 0.38, b: 0.59, a: 0.6}
     - first:
         name: _GSpeed
       second: {r: -3, g: 2, b: 1, a: 3}
@@ -277,7 +277,7 @@ Material:
       second: {r: 0.052907113, g: 0.24486735, b: 0.2835821, a: 1}
     - first:
         name: _InvFadeParemeter
-      second: {r: 0.7, g: 0.3, b: 0.04310345, a: 0.25}
+      second: {r: 0.21896552, g: 0.15944828, b: 0.04310345, a: 0}
     - first:
         name: _MainTex_ST
       second: {r: 1, g: 1, b: 0, a: 0}

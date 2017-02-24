@@ -42,8 +42,10 @@ public class SplitTetrominos : MonoBehaviour {
         CheckRow(gCubeSpawned3);
         CheckRow(gCubeSpawned4);
 
-        Destroy(gameObject);
         SpawnTetromino.bTetroSplitted = true;
+        TetroFall.fTime = 0;
+        tProperties.gPFalling.GetComponent<TetroHolderProperties>().bFalling = false;
+        Destroy(gameObject);
     }
 
 
@@ -61,18 +63,19 @@ public class SplitTetrominos : MonoBehaviour {
         tCube.iCubeID = tTetro.iTetroID;
         tCube.iWall = tTetro.iWall;
         tCube.GlobalPosition = vPosition;
+        tCube.iLastMovement = tTetro.iLastMovement;
 
         if (tCube.iWall == 1)
-            tCube.iColumn = SpawnBorder.iMapScale - (int)(-tCube.transform.position.x + (SpawnBorder.iMapScale / 2 + 0.5f));
+            tCube.iColumn = (int)Mathf.Round(Vector3.Distance(new Vector3(-(SpawnBorder.iMapScale / 2 + 0.5f), 0, 0), new Vector3(tCube.transform.position.x, 0, 0)));
 
-        if (tCube.iWall == 3)
-            tCube.iColumn = (int)(-tCube.transform.position.x + (SpawnBorder.iMapScale / 2 + 0.5f));
+        else if (tCube.iWall == 3)
+            tCube.iColumn = (int)Mathf.Round(Vector3.Distance(new Vector3((SpawnBorder.iMapScale / 2 + 0.5f), 0, 0), new Vector3(tCube.transform.position.x, 0, 0)));
 
-        if (tCube.iWall == 2)
-            tCube.iColumn = SpawnBorder.iMapScale - (int)(-tCube.transform.position.z + (SpawnBorder.iMapScale / 2 + 0.5f));
+        else if (tCube.iWall == 2)
+            tCube.iColumn = (int)Mathf.Round(Vector3.Distance(new Vector3(0, 0, (SpawnBorder.iMapScale / 2 + 0.5f)), new Vector3(0, 0, tCube.transform.position.z)));
 
-        if (tCube.iWall == 4)
-            tCube.iColumn = (int)(-tCube.transform.position.z + (SpawnBorder.iMapScale / 2 + 0.5f)) - 1;
+        else if (tCube.iWall == 4)
+            tCube.iColumn = (int)Mathf.Round(Vector3.Distance(new Vector3(0, 0, -(SpawnBorder.iMapScale / 2 + 0.5f)), new Vector3(0, 0, tCube.transform.position.z)));
 
 
         tCube.iTetroType = gameObject.GetComponent<TetroProperties>().iType;
@@ -82,7 +85,10 @@ public class SplitTetrominos : MonoBehaviour {
         rb = gCubeSpawned.GetComponent<Rigidbody>();
         rb.isKinematic = true;
 
+        tCube.CheckBugFix();
+
         TetroDismount.lListOfWall(tCube.iWall)[tCube.iRow - 1].Add(gCubeSpawned);
+        tCube.bInList = true;
 
         return gCubeSpawned;
     }
@@ -165,6 +171,9 @@ public class SplitTetrominos : MonoBehaviour {
     {
         CubeProperties tCube;
         tCube = gCubeSpawned.GetComponent<CubeProperties>();
+
+        if (tCube.iRow >= SpawnBorder.iSpawnPosY - 6)
+            SpawnTetromino.bGameOver = true;
 
         TetroDismount.CheckRowComplete(tCube.iRow, tCube.iWall);
     }

@@ -9,8 +9,6 @@ public class FixTetromino : MonoBehaviour {
     bool bTetroSplitted;
 
 
-
-
     void Start () {
         rRbody = GetComponent<Rigidbody>();
         tProperties = GetComponent<TetroProperties>();
@@ -20,8 +18,9 @@ public class FixTetromino : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Tetromino") || collision.gameObject.CompareTag("Plane"))
+        if (collision.gameObject.CompareTag("Cube") || collision.gameObject.CompareTag("Plane") || collision.gameObject.CompareTag("DamagedCube"))
         {
+            transform.position += new Vector3(0, 0.25f, 0);
             TetroFall tFall = GetComponent<TetroFall>();
             tFall.enabled = false;                              // Stops the Tetromino from falling
             rRbody.isKinematic = true;
