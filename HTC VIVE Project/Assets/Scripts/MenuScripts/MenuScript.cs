@@ -19,6 +19,17 @@ public class MenuScript : MonoBehaviour
         Credits
     }
 
+    /// <summary>
+    /// Enum of all toggle states.
+    /// </summary>
+    public enum ToggleState
+    {
+        None,
+        Easy,
+        Normal,
+        Hard
+    }
+
     #region variables
     
     // Variable for define current state.
@@ -32,7 +43,7 @@ public class MenuScript : MonoBehaviour
     public GameObject creditsMenu;
     
     // Player menu toggles
-    public bool isSelected;
+    public ToggleState currentToggle;
     public Toggle IsToggleEasy;
     public Toggle IsToggleNormal;
     public Toggle IsToggleHard;
@@ -48,6 +59,9 @@ public class MenuScript : MonoBehaviour
     {
         // Always sets first state to main menu
         currentState = MenuStates.Main;
+
+        // Always sets toggle state to none
+        currentToggle = ToggleState.None;
     }
 
 
@@ -134,20 +148,48 @@ public class MenuScript : MonoBehaviour
         // Check active toggle through function.
         ActiveToggle();
 
-        // Add load level for new scene here.
-        if (isSelected == true)
+        switch (currentToggle)
         {
-            // Log activity
-            Debug.Log("Load game");
+            case ToggleState.None:
+                Debug.Log("Select difficulty first");
+                break;
 
-            SceneManager.LoadScene("GameScene");
+            case ToggleState.Easy:
+                Debug.Log("Easy selected.");
+                TetroFall.fSpeed = 0.6f;
+                SpawnBorder.iSpawnPosY = 30;
+                SceneManager.LoadScene("GameScene");
+                break;
+            
+            case ToggleState.Normal:
+                Debug.Log("Normal selected.");
+                TetroFall.fSpeed = 0.4f;
+                SpawnBorder.iSpawnPosY = 25;
+                SceneManager.LoadScene("GameScene");
+                break;
+            
+            case ToggleState.Hard:
+                Debug.Log("Hard selected.");
+                TetroFall.fSpeed = 0.4f;
+                SpawnBorder.iSpawnPosY = 23;
+                SceneManager.LoadScene("GameScene");
+                break;
         }
 
-        else
-        {
-            // Log activity
-            Debug.Log("Select Difficulty first");
-        }
+        //// Add load level for new scene here.
+        //if (currentToggle != ToggleState.None)
+        //{
+        //    // Log activity
+        //    Debug.Log("Load game");
+
+        //    SceneManager.LoadScene("GameScene");
+        //}
+
+        //else
+        //{
+        //    // Log activity
+        //    Debug.Log("Select difficulty first");
+        //}
     }
 
 
@@ -208,6 +250,7 @@ public class MenuScript : MonoBehaviour
 
     #region Player menu toggles
 
+    // NOTE: Level difficulty in scripten ändern!!!
     /// <summary>
     /// Checks if toggle is active.
     /// </summary>
@@ -217,12 +260,7 @@ public class MenuScript : MonoBehaviour
         {
             // Log activity
             Debug.Log("Easy selected.");
-
-            
-            TetroFall.fSpeed = 0.6f;
-            SpawnBorder.iSpawnPosY = 30;
-
-            isSelected = true;
+            currentToggle = ToggleState.Easy;
         }
 
         if (IsToggleNormal)
@@ -230,10 +268,7 @@ public class MenuScript : MonoBehaviour
             // Log activity
             Debug.Log("Normal selected.");
 
-            TetroFall.fSpeed = 0.4f;
-            SpawnBorder.iSpawnPosY = 25;
-
-            isSelected = true;
+            currentToggle = ToggleState.Normal;
         }
 
         else if (IsToggleHard)
@@ -241,10 +276,7 @@ public class MenuScript : MonoBehaviour
             // Log activity
             Debug.Log("Hard selected.");
 
-            TetroFall.fSpeed = 0.4f;
-            SpawnBorder.iSpawnPosY = 23;
-
-            isSelected = true;
+            currentToggle = ToggleState.Hard;
         }
     }
 
